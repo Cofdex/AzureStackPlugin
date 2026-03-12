@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-ai-projects",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need to set up an AIProjectClient and create a versioned agent called 'support-bot' with the Phi-4 model deployment. The agent should answer customer support questions. Then show me how to start a conversation with it and get a response using the Responses API.",
+      "expected_output": "Code showing AIProjectClient setup with DefaultAzureCredential, create_version with PromptAgentDefinition, get_openai_client(), conversations.create(), and responses.create() with agent_reference.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "How do I run a coherence and similarity evaluation on my RAG pipeline outputs using azure-ai-projects? I have a list of query/response/ground_truth tuples I want to test inline — no files. Show the full flow from creating the eval to reading the results.",
+      "expected_output": "Code using openai_client.evals.create() with DataSourceConfigCustom, testing_criteria with builtin.coherence and builtin.similarity evaluator_names, evals.runs.create() with CreateEvalJSONLRunDataSourceParam inline data, polling loop, output_items.list(), and evals.delete().",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I want to build a multi-agent student-teacher system with azure-ai-projects where a teacher agent asks math questions and a student agent answers. The workflow should loop until the teacher says [COMPLETE] or 4 turns pass. Show me the full WorkflowAgentDefinition YAML approach.",
+      "expected_output": "Code showing allow_preview=True on client, two PromptAgentDefinition agents created with create_version, WorkflowAgentDefinition with YAML workflow referencing both agents, conversations.create(), responses.create() with agent_reference for the workflow, and cleanup with delete_version.",
+      "files": []
+    }
+  ]
+}
