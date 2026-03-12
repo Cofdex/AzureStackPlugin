@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-ai-contentunderstanding",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need to extract text and table data from PDF invoices stored locally. Use the Azure AI Content Understanding SDK with the prebuilt-invoice analyzer to read a local PDF file, analyze it, and print the customer name, invoice date, and line items (description + unit price). Use DefaultAzureCredential for auth.",
+      "expected_output": "Working Python code using ContentUnderstandingClient, begin_analyze_binary with file bytes, prebuilt-invoice analyzer, casting result to DocumentContent, accessing content.fields dict for CustomerName/InvoiceDate, and iterating ArrayField for line items.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code to analyze a public video URL using the Azure AI Content Understanding SDK. Use the prebuilt-videoSearch analyzer with begin_analyze and AnalysisInput(url=...). Print the markdown transcript and Summary field for each video segment. Also show how to get the start/end time in milliseconds for each segment.",
+      "expected_output": "Working Python code using ContentUnderstandingClient, begin_analyze with AnalysisInput, prebuilt-videoSearch, iterating result.contents (multiple segments), casting to AudioVisualContent, accessing markdown, fields.get('Summary'), start_time_ms, end_time_ms.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I want to create a custom analyzer in Azure AI Content Understanding that extracts three fields from contract PDFs: the party names (literal extraction), a one-sentence summary (AI-generated), and the contract type classified as one of: NDA, employment, service, or other. Show how to define the ContentFieldSchema, create the analyzer with begin_create_analyzer, and then use it to analyze a local PDF.",
+      "expected_output": "Working Python code using ContentAnalyzer, ContentFieldSchema, ContentFieldDefinition with GenerationMethod.EXTRACT/GENERATE/CLASSIFY, ContentAnalyzerConfig, begin_create_analyzer with poller.result(), then begin_analyze_binary to use the custom analyzer.",
+      "files": []
+    }
+  ]
+}
