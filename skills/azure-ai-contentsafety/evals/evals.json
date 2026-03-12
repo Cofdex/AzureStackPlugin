@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-ai-contentsafety",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I'm building a user comment moderation system. Show me how to use azure-ai-contentsafety to analyze text for harmful content and block anything with hate or violence severity of 4 or above. Use Entra ID auth (DefaultAzureCredential). I want a reusable is_safe() function.",
+      "expected_output": "Code using ContentSafetyClient with DefaultAzureCredential, AnalyzeTextOptions, response.categories_analysis, TextCategory.HATE and VIOLENCE, severity threshold check, is_safe() function returning bool.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "How do I scan user-uploaded images for violence and sexual content with the Azure Content Safety SDK? I want to check both local files and image URLs. Show how to read the severity scores for each category.",
+      "expected_output": "Code using ContentSafetyClient, AnalyzeImageOptions with ImageData(content=bytes) for local files and ImageData(url=...) for URLs, ImageCategory.VIOLENCE and SEXUAL, response.categories_analysis severity values.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I need a custom blocklist for my gaming platform to catch obfuscated slurs like 'k*ll' and 'h8'. Walk me through creating the blocklist, adding items, and then using it when analyzing user chat messages — including how to see which blocked term triggered a match.",
+      "expected_output": "Code using BlocklistClient, create_or_update_text_blocklist, TextBlocklistItem, AddOrUpdateTextBlocklistItemsOptions, AnalyzeTextOptions with blocklist_names, response.blocklists_match with blocklist_item_text field.",
+      "files": []
+    }
+  ]
+}
