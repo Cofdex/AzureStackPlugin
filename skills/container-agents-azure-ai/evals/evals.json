@@ -1,0 +1,140 @@
+{
+  "skill_name": "container-agents-azure-ai",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I have a Python function that answers questions using a local LLM. I want to run it as a container-based Foundry Agent so my team can call it through Azure AI Foundry. Show me how to wrap it with FoundryCBAgent, expose the /responses endpoint, and register it in Foundry with HostedAgentDefinition. My container image will be myacr.azurecr.io/my-llm-agent:latest and I want to give it 2 CPUs and 4Gi of memory.",
+      "expected_output": "Complete code showing: (1) FoundryCBAgent setup with agent_run implementation that calls the user's function, (2) agent.run() to start server, (3) AIProjectClient with allow_preview=True, (4) create_version call with HostedAgentDefinition including container_protocol_versions with AgentProtocol.RESPONSES v0.1.1, cpu='2', memory='4Gi', and the image URL",
+      "assertions": [
+        {
+          "name": "uses_foundry_cb_agent",
+          "description": "Code imports and instantiates FoundryCBAgent from azure.ai.agentserver.core",
+          "type": "contains",
+          "value": "FoundryCBAgent"
+        },
+        {
+          "name": "uses_agent_run_context",
+          "description": "Code uses AgentRunContext for accessing user input",
+          "type": "contains",
+          "value": "AgentRunContext"
+        },
+        {
+          "name": "allow_preview_true",
+          "description": "AIProjectClient is constructed with allow_preview=True",
+          "type": "contains",
+          "value": "allow_preview=True"
+        },
+        {
+          "name": "uses_hosted_agent_definition",
+          "description": "Code uses HostedAgentDefinition or ImageBasedHostedAgentDefinition",
+          "type": "regex",
+          "value": "HostedAgentDefinition|ImageBasedHostedAgentDefinition"
+        },
+        {
+          "name": "correct_protocol",
+          "description": "ProtocolVersionRecord uses AgentProtocol.RESPONSES",
+          "type": "contains",
+          "value": "AgentProtocol.RESPONSES"
+        },
+        {
+          "name": "correct_cpu_memory",
+          "description": "cpu and memory values are set correctly",
+          "type": "regex",
+          "value": "cpu.*2|memory.*4Gi"
+        },
+        {
+          "name": "correct_image",
+          "description": "Image URL from the prompt is used",
+          "type": "contains",
+          "value": "myacr.azurecr.io/my-llm-agent:latest"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I want to build a streaming container agent for Azure AI Foundry. My agent should stream responses token by token. Show me how to implement the streaming pattern with FoundryCBAgent — I need the right event types and the correct event ordering. Also show how to test it locally with curl.",
+      "expected_output": "Code showing: async generator returned from agent_run, ResponseCreatedEvent followed by ResponseOutputItemAddedEvent, then ResponseTextDeltaEvent for each chunk, then ResponseTextDoneEvent, then ResponseCompletedEvent. Plus curl command for local streaming test.",
+      "assertions": [
+        {
+          "name": "uses_response_created_event",
+          "description": "Code includes ResponseCreatedEvent",
+          "type": "contains",
+          "value": "ResponseCreatedEvent"
+        },
+        {
+          "name": "uses_response_output_item_added",
+          "description": "Code includes ResponseOutputItemAddedEvent",
+          "type": "contains",
+          "value": "ResponseOutputItemAddedEvent"
+        },
+        {
+          "name": "uses_text_delta_event",
+          "description": "Code includes ResponseTextDeltaEvent for streaming tokens",
+          "type": "contains",
+          "value": "ResponseTextDeltaEvent"
+        },
+        {
+          "name": "uses_text_done_event",
+          "description": "Code includes ResponseTextDoneEvent",
+          "type": "contains",
+          "value": "ResponseTextDoneEvent"
+        },
+        {
+          "name": "uses_response_completed_event",
+          "description": "Code includes ResponseCompletedEvent",
+          "type": "contains",
+          "value": "ResponseCompletedEvent"
+        },
+        {
+          "name": "async_generator_pattern",
+          "description": "Uses async generator (yield) for streaming",
+          "type": "contains",
+          "value": "yield"
+        },
+        {
+          "name": "curl_streaming_test",
+          "description": "Includes curl command for local testing with stream:true",
+          "type": "contains",
+          "value": "curl"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I already have an Azure AI Foundry container agent registered. Show me how to start a multi-turn conversation with it using the Conversations + Responses API. I want to ask it two questions and keep the conversation context between them, then clean up the conversation.",
+      "expected_output": "Code showing: AIProjectClient setup, get_openai_client(), conversations.create() with initial message, responses.create() with agent_reference dict, conversations.items.create() for second message, second responses.create(), and conversations.delete() for cleanup.",
+      "assertions": [
+        {
+          "name": "uses_get_openai_client",
+          "description": "Code calls get_openai_client() on the AIProjectClient",
+          "type": "contains",
+          "value": "get_openai_client"
+        },
+        {
+          "name": "creates_conversation",
+          "description": "Code calls conversations.create() to start a conversation",
+          "type": "contains",
+          "value": "conversations.create"
+        },
+        {
+          "name": "uses_agent_reference",
+          "description": "responses.create() includes agent_reference in extra_body",
+          "type": "contains",
+          "value": "agent_reference"
+        },
+        {
+          "name": "multi_turn_continuation",
+          "description": "Code adds a second message to the same conversation",
+          "type": "regex",
+          "value": "conversations.items.create|items.create"
+        },
+        {
+          "name": "conversation_cleanup",
+          "description": "Code deletes the conversation at the end",
+          "type": "contains",
+          "value": "conversations.delete"
+        }
+      ]
+    }
+  ]
+}
