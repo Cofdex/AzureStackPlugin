@@ -1,0 +1,43 @@
+{
+  "skill_name": "azure-ai-ml",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need to train a scikit-learn classifier using AzureML SDK v2. Show me how to submit a command job that runs my train.py script located in ./src/, using a local CSV file at ./data/train.csv as input, saving the model to an output folder. The cluster is called 'gpu-cluster' and I want to use the curated sklearn-1.5 environment from the azureml registry.",
+      "expected_output": "Complete Python code using the azure-ai-ml SDK: MLClient setup with DefaultAzureCredential, command() function call with code='./src/', proper Input(type=AssetTypes.URI_FILE, path='./data/train.csv'), Output(type=AssetTypes.URI_FOLDER), correct environment URI format (azureml://registries/azureml/environments/sklearn-1.5/labels/latest), compute='gpu-cluster', and ml_client.jobs.create_or_update(job) submission.",
+      "files": [],
+      "assertions": [
+        {"id": "uses-command-function", "text": "Code uses the command() function from azure.ai.ml (SDK v2 pattern, not ScriptRunConfig)"},
+        {"id": "input-uses-AssetTypes-URI_FILE", "text": "Input type uses AssetTypes.URI_FILE constant (from azure.ai.ml.constants)"},
+        {"id": "correct-curated-env-uri", "text": "Environment is the curated sklearn registry URI: azureml://registries/azureml/environments/sklearn-1.5/labels/latest"},
+        {"id": "uses-jobs-create-or-update", "text": "Job is submitted with ml_client.jobs.create_or_update(job) or ml_client.create_or_update(job)"},
+        {"id": "output-uses-uri-folder", "text": "Output type is URI_FOLDER (not URI_FILE) since the model is saved to a folder"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Help me build a two-step AzureML pipeline: first step preprocesses data (prep.py in ./prep/), second step trains a model (train.py in ./train/). The output of step 1 should feed as input to step 2. Use the @pipeline decorator pattern and submit it to a compute cluster called 'cpu-cluster'.",
+      "expected_output": "Python code using @pipeline decorator from azure.ai.ml.dsl, two command() job definitions with chained outputs/inputs (prep.outputs.prepared -> train_step inputs), pipeline function that takes raw data input and returns trained model output, and ml_client.jobs.create_or_update(pipeline_job) call.",
+      "files": [],
+      "assertions": [
+        {"id": "uses-pipeline-decorator", "text": "@pipeline decorator is used (imported from azure.ai.ml.dsl), not the old Pipeline class"},
+        {"id": "chains-step-outputs", "text": "Step 2 input references step 1's output via prep_step.outputs.<name> chaining pattern"},
+        {"id": "pipeline-returns-outputs", "text": "Pipeline function returns a dict of outputs (e.g., return {'trained_model': ...})"},
+        {"id": "submits-pipeline-job", "text": "Pipeline job is submitted via ml_client.jobs.create_or_update(pipeline_job)"}
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I have a trained MLflow model in ./outputs/model/. I want to: 1) register it in the AzureML model registry as 'fraud-detector' version 1, 2) create a managed online endpoint called 'fraud-endpoint', 3) deploy the model to it with instance type Standard_DS3_v2, and 4) route all traffic to the deployment.",
+      "expected_output": "Complete code: Model entity with type=AssetTypes.MLFLOW_MODEL and ml_client.models.create_or_update(), ManagedOnlineEndpoint with auth_mode='key', ManagedOnlineDeployment referencing 'azureml:fraud-detector:1', begin_create_or_update().result() for both, and endpoint.traffic = {'blue': 100} update.",
+      "files": [],
+      "assertions": [
+        {"id": "model-type-MLFLOW_MODEL", "text": "Model registration uses AssetTypes.MLFLOW_MODEL (the correct constant for MLflow models)"},
+        {"id": "endpoint-auth-mode", "text": "ManagedOnlineEndpoint includes auth_mode='key'"},
+        {"id": "deployment-references-registered-model", "text": "ManagedOnlineDeployment references the registered model as azureml:fraud-detector:1"},
+        {"id": "traffic-routing", "text": "Traffic routing sets endpoint.traffic = {'blue': 100} and calls begin_create_or_update again"},
+        {"id": "uses-begin-create-lro", "text": "Compute/endpoint creation calls use LRO pattern: .begin_create_or_update(...).result()"}
+      ]
+    }
+  ]
+}
