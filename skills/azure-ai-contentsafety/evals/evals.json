@@ -1,0 +1,47 @@
+{
+  "skill_name": "azure-ai-contentsafety",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I'm building a user comment moderation system. Before saving a comment to the database, I want to check if it contains hate speech or violent content using Azure AI Content Safety. If severity is 4 or higher for either category, reject the comment. Show me the Python function.",
+      "expected_output": "Python function that: (1) creates ContentSafetyClient with AzureKeyCredential or DefaultAzureCredential, (2) calls analyze_text with AnalyzeTextOptions, (3) optionally filters to only HATE and VIOLENCE categories, (4) iterates categories_analysis checking for severity >= 4, (5) returns True/False or raises an exception for flagged content, (6) handles HttpResponseError",
+      "files": [],
+      "assertions": [
+        "Code imports ContentSafetyClient from azure.ai.contentsafety",
+        "Code imports AnalyzeTextOptions and TextCategory from azure.ai.contentsafety.models",
+        "Code calls client.analyze_text() with an AnalyzeTextOptions instance",
+        "Code checks category_result.severity against a threshold (>= 4 or similar)",
+        "Code checks TextCategory.HATE and TextCategory.VIOLENCE categories",
+        "Code handles HttpResponseError with a try/except block"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "My platform lets users upload images. I need to screen each uploaded image for sexual and violent content before storing it. Images over 4 MB should be rejected before sending to the API. Severity 2 or above should be flagged for review, severity 4 or above should be auto-rejected. Write the Python moderation function.",
+      "expected_output": "Python function that: (1) checks image size before API call and rejects files > 4 MB, (2) creates ContentSafetyClient, (3) reads image bytes and wraps in ImageData(content=...), (4) calls analyze_image with AnalyzeImageOptions and categories=[ImageCategory.SEXUAL, ImageCategory.VIOLENCE], (5) returns different outcomes ('allow', 'review', 'block') based on max severity across categories",
+      "files": [],
+      "assertions": [
+        "Code imports AnalyzeImageOptions, ImageData, and ImageCategory from azure.ai.contentsafety.models",
+        "Code calls client.analyze_image() with an AnalyzeImageOptions instance",
+        "Code uses ImageData(content=image_bytes) to pass the image",
+        "Code filters to ImageCategory.SEXUAL and ImageCategory.VIOLENCE",
+        "Code validates image size (4 MB limit) before sending to the API",
+        "Code returns different actions based on severity thresholds (2 for review, 4 for block)"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I want to create a custom blocklist called 'competitor-brands' with competitor product names, then use it in text analysis for my customer support chatbot. Show me how to create the blocklist, add 3 example terms, run a text analysis using the blocklist, and check for matches.",
+      "expected_output": "Python code that: (1) creates BlocklistClient and ContentSafetyClient, (2) calls create_or_update_text_blocklist with the blocklist name, (3) calls add_or_update_blocklist_items with AddOrUpdateTextBlocklistItemsOptions containing 3 TextBlocklistItem entries, (4) runs analyze_text with AnalyzeTextOptions that includes blocklist_names=['competitor-brands'], (5) checks response.blocklists_match and prints match details (blocklist_item_text, blocklist_name)",
+      "files": [],
+      "assertions": [
+        "Code creates BlocklistClient from azure.ai.contentsafety",
+        "Code calls client.create_or_update_text_blocklist() with blocklist_name and a TextBlocklist object",
+        "Code calls add_or_update_blocklist_items() with AddOrUpdateTextBlocklistItemsOptions containing TextBlocklistItem entries",
+        "Code creates ContentSafetyClient and calls analyze_text()",
+        "Code passes blocklist_names=['competitor-brands'] in the AnalyzeTextOptions",
+        "Code checks response.blocklists_match and accesses match.blocklist_item_text and match.blocklist_name"
+      ]
+    }
+  ]
+}

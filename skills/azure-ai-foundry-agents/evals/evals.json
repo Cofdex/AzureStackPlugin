@@ -1,0 +1,45 @@
+{
+  "skill_name": "azure-ai-foundry-agents",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need to create an Azure AI agent in Python that can analyze CSV files and generate bar charts. It should use code interpreter and I want to stream the response to the user in real time. I have my PROJECT_ENDPOINT and MODEL_DEPLOYMENT_NAME set as env vars already.",
+      "expected_output": "Complete Python code that: (1) creates an AIProjectClient with DefaultAzureCredential, (2) uploads the CSV file and sets up CodeInterpreterTool with the file ID, (3) creates an agent with the code interpreter, (4) creates a thread and message, (5) uses runs.stream() with a streaming handler or iteration to print tokens in real time, (6) retrieves and saves any generated image files after the run.",
+      "files": [],
+      "assertions": [
+        "Code imports AIProjectClient from azure.ai.projects and DefaultAzureCredential from azure.identity",
+        "Code uses CodeInterpreterTool with file_ids parameter",
+        "Code uses agents_client.runs.stream() or equivalent streaming method (not just runs.create with polling)",
+        "Code shows how to print streaming delta text (MessageDeltaChunk)",
+        "Code includes file retrieval for generated images/files after the run",
+        "Code uses os.environ for PROJECT_ENDPOINT and MODEL_DEPLOYMENT_NAME"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "How do I connect an Azure AI agent to an MCP server? I have a hosted MCP server at https://my-tools.internal.company.com/sse and I want the agent to use it, but I need manual approval before each tool call since it's accessing sensitive data.",
+      "expected_output": "Code showing McpTool setup with the server URL, agent creation with the MCP tool, and a manual approval loop or RunHandler that intercepts requires_action status, checks for RequiredMcpToolCall, and submits ToolApproval objects.",
+      "files": [],
+      "assertions": [
+        "Code creates McpTool with server_label and server_url parameters",
+        "Code creates an agent with mcp_tool.definitions as tools",
+        "Code shows the manual approval pattern: either a polling loop checking for requires_action + SubmitToolApprovalAction, or a RunHandler subclass with submit_mcp_tool_approval method",
+        "Code imports SubmitToolApprovalAction, RequiredMcpToolCall, and ToolApproval",
+        "Code does NOT call set_approval_mode('never') since the user wants manual approval"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I'm using the agent-framework library with AzureAIAgentsProvider and I want my agent to return structured data as a Pydantic model. The agent should extract product information (name, price, category, in_stock boolean) from user messages. Show me how to set this up with async code.",
+      "expected_output": "Async Python code using AzureAIAgentsProvider with a Pydantic model for structured output, showing async context manager usage, the Pydantic model definition with the required fields, and how to pass the response format when running the agent.",
+      "files": [],
+      "assertions": [
+        "Code defines a Pydantic BaseModel class with name (str), price (float), category (str), and in_stock (bool) fields",
+        "Code uses AzureAIAgentsProvider from agent_framework.azure",
+        "Code uses async with syntax for both the credential and provider",
+        "Code calls provider.create_agent() with appropriate instructions",
+        "Code passes the Pydantic model as response_format in agent.run() OR uses ResponseFormatJsonSchema with the model's JSON schema"
+      ]
+    }
+  ]
+}
