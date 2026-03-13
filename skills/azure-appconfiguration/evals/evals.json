@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-appconfiguration",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write a Python script using the Azure App Configuration SDK that loads settings from a store. Connect using a connection string from the APPCONFIGURATION_CONNECTION_STRING env var. Read a setting with key 'app:database:host' and label 'prod'. Then list all settings whose keys start with 'app:' and label is 'prod', printing each key and value. Also show how to upsert a new setting with key 'app:cache:ttl', label 'prod', value '300', and tag env=prod.",
+      "expected_output": "Python script using AzureAppConfigurationClient.from_connection_string(), get_configuration_setting(key='app:database:host', label='prod'), list_configuration_settings(key_filter='app:*', label_filter='prod'), set_configuration_setting(ConfigurationSetting(key='app:cache:ttl', label='prod', value='300', tags={'env': 'prod'}))",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "I need to manage feature flags in Azure App Configuration using Python. Create a feature flag called 'dark-mode' that's enabled for 30% of users (percentage rollout). Also create a second flag 'admin-panel' enabled only for specific users 'alice@example.com' and 'bob@example.com' with 0% default rollout. Show how to read feature flags back and check if they're enabled, and how to list all feature flags in the store.",
+      "expected_output": "Code using FeatureFlagConfigurationSetting with feature_id, enabled, filters using FILTER_PERCENTAGE and FILTER_TARGETING constants, reading flags with isinstance check, listing with key_filter='.appconfig.featureflag/*'",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Show me how to safely update configuration settings in Azure App Configuration without overwriting changes made by another process. I want to: (1) read a setting and update it only if it hasn't changed using ETags, (2) poll for changes to a setting efficiently without fetching it every time if it hasn't changed, and (3) create a snapshot called 'release-3.0' of all settings with key prefix 'app:' and label 'prod'.",
+      "expected_output": "Code using MatchConditions.IfNotModified for conditional set with ResourceModifiedError handling, MatchConditions.IfModified for conditional get (returns None if unchanged), and begin_create_snapshot with ConfigurationSettingsFilter then poller.result()",
+      "files": []
+    }
+  ]
+}

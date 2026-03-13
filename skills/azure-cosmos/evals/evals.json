@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-cosmos",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Set up an Azure Cosmos DB client in Python with dual auth: use DefaultAzureCredential when COSMOS_URL env var is set (production), and fall back to COSMOS_CONNECTION_STRING for local development. Then show how to get (or create) a database called 'todo-app' and a container called 'tasks' with partition key '/userId' and 400 RU/s throughput. Include all imports.",
+      "expected_output": "Python code with CosmosClient(url=..., credential=DefaultAzureCredential()) for prod path, CosmosClient.from_connection_string() for dev path, create_database_if_not_exists('todo-app'), create_container_if_not_exists with PartitionKey(path='/userId') and offer_throughput=400",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write a Python service class TaskService for a Cosmos DB container that stores task documents. The class should accept a ContainerProxy in __init__ and implement: create(task_dict) using create_item, get(task_id, user_id) using read_item with proper partition key, update(task_id, user_id, updates_dict) using patch_item to do partial updates (replace op for each field in updates_dict), delete(task_id, user_id) as an idempotent operation (no error if not found), and list_by_user(user_id) using a parameterized query. Include correct imports and error handling with CosmosResourceNotFoundError.",
+      "expected_output": "Class with __init__(self, container: ContainerProxy), create_item, read_item(item=task_id, partition_key=user_id), patch_item with patch_operations list of replace ops, delete_item with CosmosResourceNotFoundError catch, query_items with @userId parameter",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write pytest unit tests for a TaskService class that uses Cosmos DB. Use unittest.mock.MagicMock to mock the ContainerProxy. Write tests for: (1) get() returns None when the item is not found (mock raises CosmosResourceNotFoundError), (2) create() calls create_item with the correct body and returns the result, (3) list_by_user() calls query_items with a parameterized query containing the userId. Show the mock setup, fixtures, and assertions.",
+      "expected_output": "pytest tests with @pytest.fixture for mock_container and task_service, MagicMock() for container, side_effect=CosmosResourceNotFoundError(...) for not found test, assert_called_once_with checks on create_item and query_items with correct parameters=[{'name': '@userId', 'value': ...}]",
+      "files": []
+    }
+  ]
+}

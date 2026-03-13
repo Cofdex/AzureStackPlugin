@@ -1,0 +1,77 @@
+{
+  "skill_name": "azure-keyvault",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write a Python module for managing application secrets in Azure Key Vault. The vault URL is 'https://myapp-vault.vault.azure.net'. Include functions to: (1) store a secret with an expiry date 90 days from now and a 'environment=production' tag, (2) retrieve a secret value by name, (3) list all non-expired enabled secrets (names only, no values), and (4) rotate a secret by setting a new value while soft-deleting the old version isn't needed \u2014 just overwrite it. Use DefaultAzureCredential.",
+      "expected_output": "Python module with SecretClient, set_secret() with expires_on and tags, get_secret() returning .value, list_properties_of_secrets() iterating metadata (NOT accessing .value on list items), and set_secret() again for rotation. Single reused client instance.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "e0-a1",
+          "text": "Uses SecretClient with myapp-vault.vault.azure.net vault URL"
+        },
+        {
+          "id": "e0-a2",
+          "text": "set_secret() called with expires_on (timedelta or 90 days) and tags containing environment=production"
+        },
+        {
+          "id": "e0-a3",
+          "text": "List function uses list_properties_of_secrets() and does NOT access .value on list items (metadata only)"
+        },
+        {
+          "id": "e0-a4",
+          "text": "Single SecretClient instance reused across functions (not instantiated per call inside each function)"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "Set up an Azure Key Vault RSA key for signing JWTs in a Python service. The vault is 'https://signing-vault.vault.azure.net'. Create a 2048-bit RSA key named 'jwt-signing-key' with only sign and verify operations allowed. Then write a function that takes a bytes payload, computes its SHA-256 digest, signs it with the RS256 algorithm, and verifies the signature \u2014 returning True/False. Use DefaultAzureCredential.",
+      "expected_output": "Code using KeyClient to create_rsa_key with key_operations=[KeyOperation.sign, KeyOperation.verify]. CryptographyClient built with credential= parameter (not just the key). Signs with SignatureAlgorithm.rs256, verifies with crypto.verify().is_valid. Uses hashlib.sha256 to get digest bytes.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "e1-a1",
+          "text": "create_rsa_key('jwt-signing-key', size=2048) with key_operations restricting to sign and verify"
+        },
+        {
+          "id": "e1-a2",
+          "text": "CryptographyClient instantiated with credential= parameter (not just the key object)"
+        },
+        {
+          "id": "e1-a3",
+          "text": "Signing uses SignatureAlgorithm.rs256 (enum, not string 'RS256')"
+        },
+        {
+          "id": "e1-a4",
+          "text": "Verification result accessed via .is_valid attribute"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Write an async Python function that creates a self-signed TLS certificate in Azure Key Vault for the domain 'api.mycompany.com' (also valid for '*.api.mycompany.com'), valid for 24 months, exportable as PKCS12. Vault URL: 'https://cert-vault.vault.azure.net'. After creation, retrieve the certificate and print the DER bytes length. Handle the case where the certificate might already exist by catching the appropriate exception and retrieving the existing one instead.",
+      "expected_output": "Async code using CertificateClient from azure.keyvault.certificates.aio. CertificatePolicy with issuer_name=WellKnownIssuerNames.self, san_dns_names with both domains, validity_in_months=24, exportable=True, content_type=CertificateContentType.pkcs12. begin_create_certificate poller awaited. cert.cer for DER bytes. Catches ResourceExistsError or HttpResponseError for existing cert.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "e2-a1",
+          "text": "Uses async CertificateClient from azure.keyvault.certificates.aio"
+        },
+        {
+          "id": "e2-a2",
+          "text": "CertificatePolicy includes san_dns_names with both 'api.mycompany.com' and '*.api.mycompany.com', validity_in_months=24, exportable=True, content_type PKCS12"
+        },
+        {
+          "id": "e2-a3",
+          "text": "begin_create_certificate poller result is awaited (await poller.result())"
+        },
+        {
+          "id": "e2-a4",
+          "text": "Handles existing certificate exception (ResourceExistsError or HttpResponseError 409) by falling back to get_certificate()"
+        }
+      ]
+    }
+  ]
+}

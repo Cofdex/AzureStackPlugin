@@ -1,0 +1,89 @@
+{
+  "skill_name": "azure-identity",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Set up Azure authentication for a Python FastAPI app that runs both locally (dev) and in Azure App Service (production). In production it should use a user-assigned managed identity (client ID: 'abc-123'). Locally, developers use `az login`. Write the credential setup and show how to use it with BlobServiceClient to access a storage account at 'https://mystorageaccount.blob.core.windows.net'.",
+      "expected_output": "Python code that sets up DefaultAzureCredential with managed_identity_client_id='abc-123' for production, with optional local dev exclusions, and uses it with BlobServiceClient. Should demonstrate credential is passed directly to the client constructor.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "e0-a1",
+          "text": "Sets managed_identity_client_id='abc-123' on DefaultAzureCredential OR creates ManagedIdentityCredential(client_id='abc-123') explicitly",
+          "check": "grep -r 'abc-123' {output_dir}"
+        },
+        {
+          "id": "e0-a2",
+          "text": "Uses BlobServiceClient with the storage account URL 'https://mystorageaccount.blob.core.windows.net'",
+          "check": "grep -r 'mystorageaccount' {output_dir}"
+        },
+        {
+          "id": "e0-a3",
+          "text": "Uses async credential from azure.identity.aio (not sync) for FastAPI async context",
+          "check": "grep -r 'azure.identity.aio' {output_dir}"
+        },
+        {
+          "id": "e0-a4",
+          "text": "Credential is properly closed via async with or explicit await credential.close()",
+          "check": "grep -rE '(async with.*credential|await.*credential\\.close|await.*close)' {output_dir}"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "Write a Python async function that authenticates to Azure Key Vault using a service principal (tenant_id, client_id, client_secret from environment variables) and retrieves a secret named 'db-password' from vault 'https://mycompany-vault.vault.azure.net'. The function should work in an async context and properly clean up the credential.",
+      "expected_output": "Async Python code using ClientSecretCredential (not DefaultAzureCredential), async with context manager for the credential, SecretClient from azure.keyvault.secrets.aio, and await for get_secret(). Should read env vars for the service principal values.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "e1-a1",
+          "text": "Uses ClientSecretCredential from azure.identity.aio (async module)",
+          "check": "grep -r 'azure.identity.aio' {output_dir}"
+        },
+        {
+          "id": "e1-a2",
+          "text": "Reads AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET from environment variables",
+          "check": "grep -rE '(AZURE_TENANT_ID|AZURE_CLIENT_ID|AZURE_CLIENT_SECRET)' {output_dir}"
+        },
+        {
+          "id": "e1-a3",
+          "text": "Credential is properly cleaned up using async with or await credential.close()",
+          "check": "grep -rE '(async with.*Credential|await.*\\.close\\(\\))' {output_dir}"
+        },
+        {
+          "id": "e1-a4",
+          "text": "Retrieves secret named 'db-password' using await client.get_secret()",
+          "check": "grep -r 'db-password' {output_dir}"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Build a ChainedTokenCredential for an app that prefers workload identity in AKS, falls back to managed identity, then falls back to Azure CLI for local development. After creating the credential, call get_token() directly to get a bearer token for the Azure Resource Manager API and use it in a requests.get() call to list subscriptions at 'https://management.azure.com/subscriptions?api-version=2020-01-01'.",
+      "expected_output": "Code using ChainedTokenCredential with WorkloadIdentityCredential, ManagedIdentityCredential, AzureCliCredential in that order. Token scope must be 'https://management.azure.com/.default' (with /.default). Should use token.token as Bearer in Authorization header.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "e2-a1",
+          "text": "ChainedTokenCredential contains WorkloadIdentityCredential, ManagedIdentityCredential, AzureCliCredential in that order",
+          "check": "python3 -c \"import re; txt=open('{output_dir}/solution.py').read(); m=re.search(r'ChainedTokenCredential.*?\\)', txt, re.DOTALL); print(bool(m and 'WorkloadIdentityCredential' in m.group() and 'ManagedIdentityCredential' in m.group() and 'AzureCliCredential' in m.group()))\""
+        },
+        {
+          "id": "e2-a2",
+          "text": "Token scope uses correct format: 'https://management.azure.com/.default' (with /.default suffix)",
+          "check": "grep -r 'management.azure.com/.default' {output_dir}"
+        },
+        {
+          "id": "e2-a3",
+          "text": "Uses token.token as Bearer in Authorization header for the requests call",
+          "check": "grep -rE '(token\\.token|Bearer)' {output_dir}"
+        },
+        {
+          "id": "e2-a4",
+          "text": "Calls the correct subscriptions URL with api-version=2020-01-01",
+          "check": "grep -r 'subscriptions' {output_dir}"
+        }
+      ]
+    }
+  ]
+}

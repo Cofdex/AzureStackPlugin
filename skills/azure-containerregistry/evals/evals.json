@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-containerregistry",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write a Python script that connects to an Azure Container Registry at 'myregistry.azurecr.io' using DefaultAzureCredential. The script should: (1) list all repository names, (2) for each repo, list its tags sorted newest-first using the correct order enum, (3) print each tag's name, digest, and last_updated_on. Use the azure-containerregistry SDK (not the azure-mgmt-containerregistry management SDK).",
+      "expected_output": "Python script using ContainerRegistryClient with list_repository_names(), list_tag_properties() with ArtifactTagOrder.LAST_UPDATED_ON_DESCENDING enum, printing tag.name, tag.digest, tag.last_updated_on",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write a Python cleanup script for ACR. It should connect to 'myregistry.azurecr.io' with DefaultAzureCredential and clean up the 'myapp' repository by: (1) keeping only the 5 most recently updated tags and deleting the rest, (2) after deleting old tags, finding and deleting all untagged manifests. Use the correct SDK classes and sort orders.",
+      "expected_output": "Script using ContainerRegistryClient, list_tag_properties with LAST_UPDATED_ON_DESCENDING, delete_tag for old tags, then list_manifest_properties checking manifest.tags == [] to find untagged manifests, delete_manifest for each",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code using the azure-containerregistry SDK to: (1) lock a production image by setting its manifest permissions to read-only (can_delete=False, can_write=False) — reference it by the tag 'prod-stable' in the 'myapp' repo, (2) show how to use ContainerRegistryContentClient to upload a simple OCI artifact (blob + manifest) with tag 'v2.0' to the 'artifacts' repo. Include correct imports and client construction.",
+      "expected_output": "Code using update_manifest_properties('myapp', 'prod-stable', can_write=False, can_delete=False) AND ContainerRegistryContentClient for upload_blob() + OciImageManifest/OciManifestConfig + set_manifest(manifest, tag='v2.0')",
+      "files": []
+    }
+  ]
+}

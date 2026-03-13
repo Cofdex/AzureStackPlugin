@@ -1,0 +1,77 @@
+{
+  "skill_name": "azure-data-tables",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "I need to set up an Azure Tables client in Python. My app runs in Azure with managed identity, but I also want it to work locally with Azurite. Show me how to create a TableServiceClient with DefaultAzureCredential for production and from_connection_string for local dev, then create a table called 'sessions' if it doesn't already exist.",
+      "expected_output": "Python code with conditional client creation using DefaultAzureCredential for production (Azure Storage endpoint) and from_connection_string for local dev. Uses create_table_if_not_exists('sessions'). Should show dual-auth pattern.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "uses-default-azure-credential",
+          "description": "Uses DefaultAzureCredential() as credential parameter for the production TableServiceClient"
+        },
+        {
+          "id": "uses-from-connection-string",
+          "description": "Uses from_connection_string() for the local/Azurite path"
+        },
+        {
+          "id": "uses-create-if-not-exists",
+          "description": "Calls create_table_if_not_exists('sessions') rather than create_table() which raises on duplicate"
+        },
+        {
+          "id": "correct-storage-endpoint-format",
+          "description": "Azure Storage endpoint uses correct format: https://<account>.table.core.windows.net/"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "Write a Python function to manage user profile entities in an Azure Table called 'profiles'. I need: create a profile, get a profile by user_id (return None if not found), update just the email field without touching other fields, upsert a profile, and delete a profile. Each profile has fields: user_id (RowKey), tenant_id (PartitionKey), email, display_name, active.",
+      "expected_output": "Python class or functions for CRUD on profile entities. Uses create_entity, get_entity(partition_key, row_key), update_entity with UpdateMode.MERGE for partial update, upsert_entity, delete_entity. get returns None on ResourceNotFoundError. PartitionKey=tenant_id, RowKey=user_id.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "get-returns-none-on-not-found",
+          "description": "get_profile catches ResourceNotFoundError and returns None (not raises exception)"
+        },
+        {
+          "id": "partial-update-uses-merge-mode",
+          "description": "Email-only update uses UpdateMode.MERGE (not UpdateMode.REPLACE which would delete other fields)"
+        },
+        {
+          "id": "correct-partition-row-key-assignment",
+          "description": "Entity uses PartitionKey=tenant_id and RowKey=user_id (capitalized, correct field mapping)"
+        },
+        {
+          "id": "uses-upsert-entity",
+          "description": "Upsert operation uses upsert_entity() method (not create + update conditional logic)"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I have a large Azure Table of orders. Write Python code to: (1) query all orders for a specific customer_id (PartitionKey) where status equals 'pending' and total_amount is greater than 100, using parameterized OData query; (2) batch-insert a list of new orders (all for the same customer_id) into the table using submit_transaction, handling TableTransactionError.",
+      "expected_output": "Code using query_entities with OData filter string and parameters dict (not f-string interpolation). Batch insert uses submit_transaction with list of (operation, entity) tuples. Error handling catches TableTransactionError. Operations formatted as ('create', entity_dict) tuples.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "uses-parameterized-odata-query",
+          "description": "query_entities uses a parameters dict like parameters={'status': 'pending', 'min': 100} rather than f-string/string interpolation"
+        },
+        {
+          "id": "submit-transaction-tuple-format",
+          "description": "submit_transaction receives a list of (operation_type, entity_dict) tuples e.g. [('create', {...}), ...]"
+        },
+        {
+          "id": "catches-table-transaction-error",
+          "description": "Code catches TableTransactionError (not generic Exception or HttpResponseError) for batch failures"
+        },
+        {
+          "id": "odata-filter-uses-at-params",
+          "description": "OData filter string uses @param placeholders like 'Status eq @status and TotalAmount gt @min' matching the parameters dict keys"
+        }
+      ]
+    }
+  ]
+}

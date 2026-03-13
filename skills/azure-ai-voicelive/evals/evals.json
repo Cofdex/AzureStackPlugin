@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-ai-voicelive",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write a minimal Python async script using the Azure AI Voice Live SDK that connects to a VoiceLive endpoint, configures a session with Server VAD enabled (threshold 0.5, silence 500ms), sends a WAV file's audio to the model (read from 'input.wav' as raw PCM16 bytes), and prints the AI's spoken response transcript. Handle interruptions if speech starts. Use AZURE_VOICELIVE_ENDPOINT and AZURE_VOICELIVE_API_KEY env vars.",
+      "expected_output": "Async Python script using azure.ai.voicelive.aio.connect(), configures RequestSession with ServerVad, encodes audio bytes with base64 and calls conn.input_audio_buffer.append(), iterates events with async for, handles RESPONSE_AUDIO_TRANSCRIPT_DELTA for transcript and INPUT_AUDIO_BUFFER_SPEECH_STARTED to call conn.response.cancel()",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Build a Python voice assistant using Azure AI Voice Live SDK that has a get_current_time() function tool and a get_weather(location: str) function tool. When the AI calls either function, execute it and return the result so the AI can speak the answer. The assistant should use AzureStandardVoice 'en-US-AvaNeural', enable transcription with whisper-1, and handle the full function calling loop correctly.",
+      "expected_output": "Python code with FunctionTool definitions for both functions, Tool wrappers, ToolChoiceLiteral.AUTO in RequestSession, event handling for RESPONSE_FUNCTION_CALL_ARGUMENTS_DONE that parses event.call_id/event.name/event.arguments, submits FunctionCallOutputItem(call_id=..., output=...) via conn.conversation.create(), then calls conn.response.create() to continue the conversation",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I want to integrate an MCP server into a real-time voice app using Azure AI Voice Live SDK. The MCP server is at 'https://tools.example.com/mcp' with label 'business-tools'. Write the Python code to configure the session with this MCP server, handle MCP approval requests (auto-approve all), and detect when MCP tool calls complete. Also show manual turn mode (push-to-talk) instead of Server VAD.",
+      "expected_output": "Python code using MCPServer(url=..., server_label=..., server_description=...) in RequestSession mcp_servers=[...], turn_detection=None for manual mode, event handling for RESPONSE_MCP_CALL_ARGUMENTS_DONE that creates MCPApprovalResponseRequestItem(call_id=..., approve=True), and RESPONSE_MCP_CALL_COMPLETED event, plus conn.input_audio_buffer.commit() and conn.response.create() for push-to-talk",
+      "files": []
+    }
+  ]
+}
