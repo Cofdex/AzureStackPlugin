@@ -1,0 +1,44 @@
+{
+  "skill_name": "pydantic-models",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "I'm building a FastAPI app for a blog. Create a full Pydantic v2 schema set for a Post resource: Base, Create, Update, Response, and InDB models. The post has title, content, published status, author_id, and the DB adds id, created_at, updated_at. The Update model should support partial updates.",
+      "expected_output": "5 model classes using inheritance. PostBase with shared fields. PostCreate inheriting PostBase. PostUpdate with all Optional fields (= None defaults). PostInDB and PostResponse with id/timestamps and ConfigDict(from_attributes=True). No orm_mode, no .dict(), no class Config block.",
+      "files": [],
+      "assertions": [
+        {"id": "a0", "text": "PostUpdate has all fields as Optional[T] = None (not just Optional[T] without default)"},
+        {"id": "a1", "text": "PostInDB and/or PostResponse use ConfigDict(from_attributes=True), NOT class Config: orm_mode = True"},
+        {"id": "a2", "text": "Uses model_config = ConfigDict(...) class variable, NOT a class Config: nested class"},
+        {"id": "a3", "text": "No deprecated v1 methods (.dict(), .parse_obj(), @validator) in the generated code"},
+        {"id": "a4", "text": "PostBase defines the shared fields (title, content, published) used by Create and Update"}
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "I need validators on my UserCreate Pydantic model: email should be lowercase and stripped, password must be at least 8 chars and contain a digit, and confirm_password must match password. Show me the correct Pydantic v2 syntax for both field-level and cross-field validators.",
+      "expected_output": "Uses @field_validator with @classmethod for email and password. Uses @model_validator(mode='after') for password confirmation. No @validator (v1 syntax). Cross-field validator accesses self.password and self.confirm_password on the model instance.",
+      "files": [],
+      "assertions": [
+        {"id": "a0", "text": "Uses @field_validator('email') @classmethod (NOT @validator from Pydantic v1)"},
+        {"id": "a1", "text": "Uses @model_validator(mode='after') for cross-field confirm_password check"},
+        {"id": "a2", "text": "model_validator accesses self.password and self.confirm_password (not cls and values dict)"},
+        {"id": "a3", "text": "Password validator raises ValueError if password has no digit"},
+        {"id": "a4", "text": "No use of @root_validator (v1 syntax)"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I have a SQLAlchemy User ORM model and want to create Pydantic response schemas. I need: UserResponse (public fields only, no password_hash), a generic Page[T] model for paginated results, and a computed full_name field derived from first_name + last_name. Show me complete Pydantic v2 code.",
+      "expected_output": "UserResponse with ConfigDict(from_attributes=True) and no password_hash. Generic Page[T] using TypeVar and Generic[T]. @computed_field with @property for full_name. All v2 syntax.",
+      "files": [],
+      "assertions": [
+        {"id": "a0", "text": "UserResponse uses ConfigDict(from_attributes=True) to read from SQLAlchemy ORM objects"},
+        {"id": "a1", "text": "Page[T] uses Generic[T] and TypeVar — correct Python generic pattern"},
+        {"id": "a2", "text": "full_name uses @computed_field with @property decorator (NOT a plain @property or validator)"},
+        {"id": "a3", "text": "UserResponse does NOT include password_hash field"},
+        {"id": "a4", "text": "No class Config: orm_mode = True anywhere in the code"}
+      ]
+    }
+  ]
+}

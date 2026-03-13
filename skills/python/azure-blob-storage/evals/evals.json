@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-blob-storage",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write a Python function that uploads a local file to Azure Blob Storage and returns the blob URL. The function should take container_name, blob_name, and file_path as parameters. Use DefaultAzureCredential for auth. Handle the case where the blob already exists by overwriting it.",
+      "expected_output": "Function uses BlobServiceClient with DefaultAzureCredential, calls upload_blob(f, overwrite=True) with file opened in binary mode, constructs and returns the blob URL. Does NOT use connection string.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "I need to generate a read-only SAS URL for a specific blob that expires in 2 hours. The blob is called 'report.pdf' in container 'reports'. Show me the complete Python code including how to build the full URL from the SAS token.",
+      "expected_output": "Uses generate_blob_sas() with account_name, container_name, blob_name, account_key, BlobSasPermissions(read=True), expiry=datetime.now(timezone.utc)+timedelta(hours=2). Constructs full URL as https://<account>.blob.core.windows.net/<container>/<blob>?<sas_token>. Notes expiry is required.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "How do I list all blobs in a container that start with 'logs/2024/' and download each one to a local folder? Show me the Python code using the azure-storage-blob SDK.",
+      "expected_output": "Uses list_blobs(name_starts_with='logs/2024/') to iterate BlobProperties, gets blob_client for each, calls download_blob().readinto(f) or readall() to download. Handles the lazy iterator correctly.",
+      "files": []
+    }
+  ]
+}
