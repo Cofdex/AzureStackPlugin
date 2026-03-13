@@ -74,7 +74,7 @@ Document selected tools at the top of `epic-list.md` under `## Tool selection` (
 
 ## Phase 3 — Sprint Review
 
-**Triggered by**: Orchestrator after the review-gate barrier is released (both `code-reviewer` and `security-auditor` have completed).
+**Triggered by**: Orchestrator after the review-gate barrier is released (both `code-reviewer` and `security-agent` have completed).
 
 **Steps**:
 1. Read `sprint-N/review-report.md` and `sprint-N/security-report.md`.

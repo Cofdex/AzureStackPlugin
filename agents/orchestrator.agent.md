@@ -247,7 +247,7 @@ Parallel execution occurs when two agents have no data dependency. Spawn them si
 |---|---|---|---|
 | feature / bugfix | review-gate | Code Reviewer + Security Agent | Both completed |
 | refactor | validation-gate | Code Reviewer + Regression Tester | Both completed |
-| security | audit-scans | SAST + Secrets + Dependency + Threat Modeler | All 4 completed (or CRITICAL early exit) |
+| security | audit-scans | Security Auditor (4 scanner phases) | All 4 phases completed (or CRITICAL early exit) |
 
 ### Barrier pattern in `project-state.md`
 

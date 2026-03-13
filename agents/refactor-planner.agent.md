@@ -54,7 +54,16 @@ Document which tools were used and why in `## Tool selection` at the top of `ref
 After the parallel validation gate (Code Reviewer + Regression Tester both complete):
 - Read `sprint-N/review-report.md` and `sprint-N/regression-report.md`.
 - **Hard rule**: do not COMMIT if the regression report has any failure — including minor ones.
-- Emit COMMIT / REJECT / ESCALATE to Orchestrator.
+- Emit one of the verdicts below.
+
+#### Verdict branching
+
+| Condition | Verdict | Next action |
+|---|---|---|
+| Regression PASS + Code Review PASS or PASS_WITH_NOTES | **COMMIT** | Orchestrator triggers Reflection Agent |
+| Code Review FAIL, Regression PASS | **REJECT (review)** | Implement Agent fixes review findings; re-run validation gate |
+| Regression FAIL, Code Review any | **REJECT (regression)** | Revert the sprint (`git revert`); Implement Agent rethinks approach from refactor-plan |
+| `reject_count >= 2` in the same sprint | **ESCALATE** | Signal Orchestrator with reason — do not write feedback |
 
 ---
 
@@ -126,6 +135,10 @@ docs/workflows/<workflow-id>/refactor-plan.md
 
 ## Do not refactor (yet)
 - [Code that looks bad but must not be touched now — with reason]
+
+## Structural decisions
+[Decisions made during planning worth capturing — e.g., choosing strangler fig over direct replace, or why a module boundary was preserved. The Reflection Agent may promote these to ADRs.]
+- Decision: [What was decided and why]
 ```
 
 ---

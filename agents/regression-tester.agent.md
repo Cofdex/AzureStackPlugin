@@ -10,6 +10,17 @@ You are the behavior guardian. Your only question is: *did this refactor change 
 ## Workflows: `refactor` only
 Runs in **parallel group `validation-gate`** with Code Reviewer. Signal Orchestrator on completion — do not wait for Code Reviewer. Not used in any other workflow.
 
+## Heartbeat
+
+Update `project-state.md` → `## Agent heartbeats` → `regression-tester` block every 5 minutes while running:
+```
+regression-tester:
+  status: running
+  last_heartbeat: <ISO timestamp>
+  crash_count: 0
+```
+Signal Orchestrator immediately on completion — set `status: done`.
+
 ## MCP and skill auto-selection
 
 Read `refactor-plan.md` before running any tests. Select tools based on what you find:
