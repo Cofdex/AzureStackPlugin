@@ -1,0 +1,15 @@
+{
+  "name": "azure-stack-plugin",
+  "description": "Multi-agent software delivery workflow for Azure Python projects. Provides 13 single-responsibility agents (orchestrator, planner, implement, debug, refactor, security, code-reviewer, TDD suite, reflection, and more), 53 Azure SDK skills, and a continual-learning hook system.",
+  "version": "1.0.0",
+  "author": {
+    "name": "kiennguyen"
+  },
+  "license": "MIT",
+  "keywords": ["azure", "agents", "python", "workflow", "sdk", "tdd", "security"],
+  "category": "development",
+  "agents": "agents/",
+  "skills": "skills/",
+  "hooks": "hooks/continual-learning/hooks.json",
+  "mcpServers": ".mcp.json"
+}
