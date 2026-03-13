@@ -1,6 +1,6 @@
 # AzureStackPlugin Skills Catalog
 
-Complete list of all available skills. 52 skills across 2 categories.
+Complete list of all available skills. 53 skills across 3 categories.
 
 ## Design Skills (Infrastructure & Architecture)
 
@@ -107,6 +107,14 @@ Complete list of all available skills. 52 skills across 2 categories.
 |---|---|---|
 | `fastapi-crud` | *(FastAPI project)* | Build FastAPI REST API routers with CRUD operations, auth dependencies, Pydantic response models |
 | `pydantic-models` | *(Pydantic v2)* | Create Pydantic v2 models: Base/Create/Update/Response/InDB multi-model pattern |
+
+---
+
+## Plugin Infrastructure Skills
+
+| Skill | Install | What it does |
+|---|---|---|
+| `continual-learning` | `cp -r hooks/continual-learning .github/hooks/` | Hooks + memory patterns for AI coding agents: sessionStart/postToolUse/sessionEnd lifecycle, two-tier SQLite memory (global + local), reflection patterns |
 
 ---
 

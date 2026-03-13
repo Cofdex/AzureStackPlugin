@@ -76,5 +76,6 @@ If the user asks for a full list or catalog, render the skills-catalog.md table 
 | Monitor/observe applications | `azure-application-insights` or `azure-monitor-query` |
 | Work with CI/CD or work items | `azure-devops-sdk` |
 | Build REST APIs with Python | `fastapi-crud` + `pydantic-models` |
+| Add cross-session memory to agents | `continual-learning` |
 
 See `references/skills-catalog.md` for the full catalog with packages and detailed descriptions.
