@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-speech-stt-rest",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write a Python function that transcribes a WAV audio file using the Azure Speech to Text REST API (no SDK). The function should take audio_file_path, region, and api_key as parameters, send the audio as a POST request, and return the transcribed text string. Use the Short Audio REST endpoint.",
+      "expected_output": "A Python function using requests.post() to the correct Short Audio endpoint URL (https://<region>.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1), with Ocp-Apim-Subscription-Key header, Content-Type audio/wav header, language query param, raw audio bytes as body, and RecognitionStatus=='Success' check returning DisplayText.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "I'm using the Azure Speech STT REST API and getting different response structures — sometimes I need the confidence score and the 'clean' version of the text. How do I get detailed results including confidence scores? Show me the correct request and how to parse the NBest array.",
+      "expected_output": "Add format=detailed query param to the request. Parse result['NBest'][0] to get Confidence (0-1 float), Display (punctuated text), ITN (normalized), and Lexical (raw words). Should NOT use format=json or any other param name.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "My Azure Speech REST API transcription sometimes returns RecognitionStatus values other than 'Success'. What are all the possible status values, what do they mean, and how should I handle them in my Python code? Also, what HTTP errors should I watch for?",
+      "expected_output": "Correctly lists all RecognitionStatus values: Success, NoMatch, InitialSilenceTimeout, EndSilenceTimeout, BabbleTimeout, Error. Explains 401=wrong key/region, 429=rate limited with Retry-After header, 400=bad params/audio. Code handles each case gracefully.",
+      "files": []
+    }
+  ]
+}

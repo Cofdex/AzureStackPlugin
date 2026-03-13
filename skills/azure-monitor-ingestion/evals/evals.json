@@ -1,0 +1,42 @@
+{
+  "skill_name": "azure-monitor-ingestion",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "I need to send custom application logs to Azure Log Analytics using Python. I have a DCE endpoint at 'https://my-dce.eastus-2.ingest.monitor.azure.com', a DCR rule ID 'dcr-abc123def456789', and a stream called 'Custom-AppEvents_CL'. Write a complete Python script that sends a batch of 3 log entries with TimeGenerated, Severity, Message, and RequestDurationMs fields. Use DefaultAzureCredential and handle errors so that if one batch fails, we capture the failed records and can retry them.",
+      "expected_output": "Uses LogsIngestionClient with the DCE endpoint (not workspace URL); uses rule_id='dcr-abc123def456789' (not DCR name); stream_name='Custom-AppEvents_CL'; logs is a list of dicts with TimeGenerated in UTC ISO format; uses on_error callback with LogsUploadError that captures .failed_logs; DefaultAzureCredential for auth",
+      "files": [],
+      "assertions": [
+        {"id": "e0-a1", "text": "LogsIngestionClient uses DCE endpoint (.ingest.monitor.azure.com), not workspace ODS URL"},
+        {"id": "e0-a2", "text": "rule_id passed as DCR immutable ID (dcr-abc123def456789), not a display name"},
+        {"id": "e0-a3", "text": "logs is a list of dicts, not a JSON string (no json.dumps)"},
+        {"id": "e0-a4", "text": "on_error callback uses LogsUploadError and captures .failed_logs for retry"}
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "Write an async Python function that ingests a large list of monitoring records (potentially thousands) into Azure Monitor using the azure-monitor-ingestion SDK. The function should handle partial failures gracefully — if some chunks fail, collect those records and return them so the caller can decide what to do. Show how to properly initialize and clean up the async client. The DCR stream is Custom-ServiceMetrics_CL.",
+      "expected_output": "Imports from azure.monitor.ingestion.aio (async client); uses async with LogsIngestionClient or await client.close() for cleanup; upload is awaited; on_error callback collects failed_logs from LogsUploadError; function returns failed records list; stream_name follows Custom-*_CL pattern",
+      "files": [],
+      "assertions": [
+        {"id": "e1-a1", "text": "Imports async client from azure.monitor.ingestion.aio"},
+        {"id": "e1-a2", "text": "Uses async with or await client.close() to properly clean up the client"},
+        {"id": "e1-a3", "text": "upload() is awaited (async call, not sync)"},
+        {"id": "e1-a4", "text": "Failed records from LogsUploadError.failed_logs are collected and returned to caller"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I'm setting up Azure Monitor log ingestion for the first time. I keep getting 403 errors when calling upload(). My code looks like this:\n\nclient = LogsIngestionClient(\n    endpoint='https://my-workspace-id.ods.opinsights.azure.com',\n    credential=DefaultAzureCredential()\n)\nclient.upload(\n    rule_id='My-DCR-Rule',\n    stream_name='AppLogs',\n    logs=json.dumps([{\"Time\": \"2024-01-01\", \"Msg\": \"hello\"}])\n)\n\nWhat's wrong with this code? Fix all the issues and explain each one.",
+      "expected_output": "Identifies and fixes 4 issues: (1) endpoint is workspace ODS URL not DCE endpoint — fix to https://*.ingest.monitor.azure.com; (2) rule_id is DCR display name not immutable ID — fix to dcr-xxx format; (3) stream_name missing Custom- prefix and _CL suffix; (4) logs is json.dumps string not list of dicts; explains 403 is RBAC role missing (Monitoring Metrics Publisher on DCR)",
+      "files": [],
+      "assertions": [
+        {"id": "e2-a1", "text": "Identifies wrong endpoint: workspace ODS URL → fix to DCE .ingest.monitor.azure.com URL"},
+        {"id": "e2-a2", "text": "Identifies wrong rule_id: display name → fix to dcr-xxx immutable ID format"},
+        {"id": "e2-a3", "text": "Identifies wrong stream_name: missing Custom- prefix and/or _CL suffix"},
+        {"id": "e2-a4", "text": "Identifies logs as JSON string → fix to list of dicts (remove json.dumps)"},
+        {"id": "e2-a5", "text": "Explains 403 cause: missing Monitoring Metrics Publisher RBAC role on DCR"}
+      ]
+    }
+  ]
+}

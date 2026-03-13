@@ -1,0 +1,79 @@
+{
+  "skill_name": "azure-apim",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "I need to programmatically set up a new API in Azure API Management using Python. The API should point to my backend at https://orders.internal.example.com, be available at path 'orders', use HTTPS only, and have a rate limit policy of 200 calls per minute. Create the API, add a rate limit policy on it, and then create a product called 'Standard' that includes this API with subscription required. Also create a subscription scoped to that product. Show me the complete Python code using azure-mgmt-apimanagement.",
+      "expected_output": "Python code using ApiManagementClient with DefaultAzureCredential; uses ApiCreateOrUpdateParameter with protocols=['https']; calls begin_create_or_update().result() for the API (LRO); creates PolicyContract with XML rate-limit policy using policy_id='policy'; creates ProductContract, calls product_api.create_or_update to link API to product; creates SubscriptionCreateParameters with scope='/products/standard' format",
+      "files": [],
+      "assertions": [
+        {
+          "id": "e0-a1",
+          "text": "protocols is a lowercase list ['https'], not a string or uppercase",
+          "check": "grep for protocols=[\"https\"] or protocols=['https']"
+        },
+        {
+          "id": "e0-a2",
+          "text": "API creation uses begin_create_or_update().result() (LRO pattern)",
+          "check": "grep for begin_create_or_update and .result()"
+        },
+        {
+          "id": "e0-a3",
+          "text": "Policy is created with policy_id='policy' (the fixed constant string)",
+          "check": "grep for policy_id and value is 'policy'"
+        },
+        {
+          "id": "e0-a4",
+          "text": "Subscription scope uses /products/ prefix format (e.g. '/products/standard')",
+          "check": "grep for scope= and value starts with /products/"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "Write a Python script to manage named values and a backend in Azure APIM. The named value should store a secret API key called 'upstream-api-key' with value 'sk-abc123' marked as secret. Then create a backend pointing to https://upstream.service.com using HTTP protocol, with the named value used as an X-Auth-Token header. Finally, write an inbound policy on an existing API 'my-service' that uses this backend and sets the header from the named value. Show the complete Python using azure-mgmt-apimanagement.",
+      "expected_output": "Uses named_value.begin_create_or_update().result() (LRO) with NamedValueCreateContract, secret=True; creates BackendContract with BackendCredentialsContract where header value is a list like ['{{upstream-api-key}}']; uses policy XML referencing named value with {{upstream-api-key}} double-brace syntax; creates PolicyContract with format='xml' and policy_id='policy'",
+      "files": [],
+      "assertions": [
+        {
+          "id": "e1-a1",
+          "text": "Named value uses begin_create_or_update().result() (LRO) with secret=True",
+          "check": "grep for begin_create_or_update and secret=True"
+        },
+        {
+          "id": "e1-a2",
+          "text": "Backend header credential value is a list, not a plain string (e.g. [\"{{upstream-api-key}}\"])",
+          "check": "grep for header and list brackets around the value"
+        },
+        {
+          "id": "e1-a3",
+          "text": "Policy XML uses double curly brace {{upstream-api-key}} to reference named value",
+          "check": "grep for {{upstream-api-key}} in policy XML string"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I want to list all APIs in my APIM service 'my-apim-svc' in resource group 'prod-rg', then for each API that has 'v1' in its path, get its current policy XML. Also show how to update an API's service_url if I need to point it to a different backend — including how to handle the ETag for updates properly. Python code please.",
+      "expected_output": "Uses client.api.list_by_service() and iterates (not list conversion required but correct); uses api.path to filter for 'v1'; calls api_policy.get() with format='xml' and policy_id='policy'; shows how to call api.get() first to obtain etag, then passes if_match=api.etag to api.update() or begin_create_or_update(); demonstrates ETag pattern for avoiding 412 errors",
+      "files": [],
+      "assertions": [
+        {
+          "id": "e2-a1",
+          "text": "Uses client.api.list_by_service() to list APIs (correct method name)",
+          "check": "grep for list_by_service"
+        },
+        {
+          "id": "e2-a2",
+          "text": "Gets policy with policy_id='policy' (the fixed constant, not a user-defined name)",
+          "check": "grep for api_policy.get and 'policy' as policy_id argument"
+        },
+        {
+          "id": "e2-a3",
+          "text": "ETag update pattern: fetches resource first with .get() to obtain etag, passes it as if_match",
+          "check": "grep for .etag and if_match= used together"
+        }
+      ]
+    }
+  ]
+}

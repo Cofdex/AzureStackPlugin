@@ -1,0 +1,42 @@
+{
+  "skill_name": "azure-ai-search",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "I'm building a product search feature using Azure AI Search. My index has these fields: id (key), name (searchable), description (searchable), category (filterable, facetable), price (filterable, sortable), and a 1536-dim vector field called 'embedding'. Write a Python function that does hybrid search: combines keyword search with vector similarity. The function should accept a query string and a pre-computed query embedding, filter to a specific category, return the top 10 results with name/price/category fields, and show me how to read the search scores.",
+      "expected_output": "Uses SearchClient with search_text + vector_queries (VectorizedQuery with list[float] vector, k_nearest_neighbors, fields='embedding'); passes filter= for category; select=['name','price','category']; top=10; iterates results accessing @search.score; VectorizedQuery fields param is the field name string not a list",
+      "files": [],
+      "assertions": [
+        {"id": "e0-a1", "text": "VectorizedQuery with vector as list[float] and fields='embedding' (string field name)"},
+        {"id": "e0-a2", "text": "Both search_text and vector_queries used together (hybrid search, not pure vector)"},
+        {"id": "e0-a3", "text": "select=['name','price','category'] and top=10 present"},
+        {"id": "e0-a4", "text": "Reads @search.score from individual result dict"}
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "Create a complete Python script to set up an Azure AI Search index for a document library. The index needs: id (key), title (searchable, sortable), content (searchable), author (filterable, facetable), created_date (filterable, sortable), and a 3072-dimensional vector field 'content_embedding' for semantic search. Also configure semantic search with title as the title field and content as the content field. Show how to create the index, then upload 3 sample documents including their embeddings.",
+      "expected_output": "Uses SearchIndexClient.create_or_update_index with SearchIndex; SearchField for vector with vector_search_dimensions=3072 and vector_search_profile_name; VectorSearch with HnswAlgorithmConfiguration and VectorSearchProfile; SemanticSearch with SemanticConfiguration and SemanticPrioritizedFields; exactly one key=True field; uploads documents with merge_or_upload_documents with embedding as list[float]",
+      "files": [],
+      "assertions": [
+        {"id": "e1-a1", "text": "SearchField for vector with vector_search_dimensions=3072 and vector_search_profile_name"},
+        {"id": "e1-a2", "text": "VectorSearch with HnswAlgorithmConfiguration and VectorSearchProfile linking them"},
+        {"id": "e1-a3", "text": "SemanticSearch with SemanticConfiguration, SemanticPrioritizedFields, title and content fields"},
+        {"id": "e1-a4", "text": "Exactly one field has key=True"},
+        {"id": "e1-a5", "text": "Documents uploaded with content_embedding as list[float], not string or JSON"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Show me how to do semantic search with Azure AI Search in Python. My index 'knowledge-base' already exists with a semantic configuration called 'default'. I want to search for 'best practices for container security' and get the top 5 results with semantic captions and the top answer extracted from the results. Also explain what @search.reranker_score means versus @search.score.",
+      "expected_output": "Uses query_type='semantic' and semantic_configuration_name='default'; query_caption='extractive'; query_answer='extractive'; accesses @search.captions on results and results.get_answers(); explains @search.score is BM25/vector score while @search.reranker_score is semantic reranking score (0-4 scale)",
+      "files": [],
+      "assertions": [
+        {"id": "e2-a1", "text": "query_type='semantic' and semantic_configuration_name='default' both present"},
+        {"id": "e2-a2", "text": "query_caption='extractive' and query_answer='extractive' both present"},
+        {"id": "e2-a3", "text": "Accesses @search.captions on results and/or calls results.get_answers()"},
+        {"id": "e2-a4", "text": "Explains @search.reranker_score (semantic reranker 0-4) vs @search.score (BM25/vector)"}
+      ]
+    }
+  ]
+}
