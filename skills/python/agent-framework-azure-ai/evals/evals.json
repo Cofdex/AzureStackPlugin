@@ -1,0 +1,23 @@
+{
+  "skill_name": "agent-framework-azure-ai",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to create a persistent Azure AI agent using the agent-framework library with AzureAIAgentsProvider. The agent should be named 'ResearchAssistant', use the gpt-4o model, have a system prompt instructing it to help with research tasks, and have both the code_interpreter and bing_grounding hosted tools enabled. Use DefaultAzureCredential. Show how to create a conversation thread and send the first message 'Find recent papers on RAG architectures'.",
+      "expected_output": "AzureAIAgentsProvider with DefaultAzureCredential and project_connection_string, AgentDefinition with hosted_tools=[HostedTool.CODE_INTERPRETER, HostedTool.BING_GROUNDING], create_thread(), send_message() or run on thread, agent persists across sessions",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write Python code to add a custom function tool to an Azure AI agent. The function tool should be named 'get_stock_price' that accepts a ticker symbol string and returns a dict with current price and change percentage. Register it with the agent so the agent can call it when answering financial questions. Show how to handle the function call in the streaming response loop.",
+      "expected_output": "FunctionTool or tool decorator pattern, function definition with type hints, register with agent, streaming response handling, detect tool_call in stream, execute function, return result back to agent run",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code to connect an MCP (Model Context Protocol) server to an Azure AI agent. The MCP server runs at 'http://localhost:3000'. Configure the agent to use the MCP server as a tool source. Then demonstrate streaming a response from the agent to a user query, printing each text chunk as it arrives. Show the streaming response pattern with proper cleanup.",
+      "expected_output": "MCPServerTool or MCP integration config with server URL, streaming=True or stream parameter, async for chunk in response or on_text_delta callback, proper thread and run lifecycle management",
+      "files": []
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-event-grid",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to publish 3 custom events to an Azure Event Grid topic. Use the topic endpoint 'https://mytopic.eastus-1.eventgrid.azure.net/api/events' and AzureKeyCredential for auth. Use the modern CloudEvent format (not EventGridEvent). Each event should have type 'com.example.order.created', source '/orders', and a data dict with order details. Show all imports.",
+      "expected_output": "EventGridPublisherClient with AzureKeyCredential, CloudEvent objects with source=, type=, data=, client.send(list_of_events), NOT EventGridEvent for modern usage",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write a Python Azure Function that acts as an Event Grid webhook handler. It should receive CloudEvent events and process 'com.example.order.created' events by logging the order data. Show how to handle the Event Grid validation handshake (subscription validation) that happens when you first register the endpoint. Include the proper response format.",
+      "expected_output": "Azure Function with @app.route, check for 'aeg-event-type' header == 'SubscriptionValidation', return validationResponse with validationCode from event data, otherwise process CloudEvent data",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Show how to use Event Grid to react to Azure Blob Storage events. Write Python code that: (1) subscribes to blob created events on a storage account using the EventGridManagementClient, targeting a webhook endpoint, and (2) processes the BlobCreated system event in a handler function, extracting the blob URL and container name from the event data.",
+      "expected_output": "EventGridManagementClient or CLI-based subscription setup, SystemEvent or event.data['url'] and event.data['blobType'], parsing StorageBlobCreatedEventData",
+      "files": []
+    }
+  ]
+}

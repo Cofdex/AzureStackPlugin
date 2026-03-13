@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-container-apps",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code using azure-mgmt-appcontainers to deploy a new Container App. First create a Managed Environment in resource group 'myRG' in eastus, then deploy a Container App called 'api-service' using image 'myregistry.azurecr.io/api:v1'. Configure it with 0.5 CPU, 1.0Gi memory, external HTTP ingress on port 8080, min 1 replica and max 5 replicas, and an environment variable APP_ENV=production. Use DefaultAzureCredential. Show all the model imports.",
+      "expected_output": "ContainerAppsAPIClient not ContainerAppsClient, begin_create_or_update on managed_environments and container_apps, .result(timeout=300), ContainerResources(cpu='0.5' as string, memory='1.0Gi'), Ingress(external=True, target_port=8080), EnvironmentVar as list not dict, full ARM resource ID for environment_id",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write Python code to update an existing Container App 'api-service' in 'myRG' to use a new image 'myregistry.azurecr.io/api:v2' and scale it to minimum 2 and maximum 10 replicas. Then show how to list all Container Apps in 'myRG' and print each app's name, provisioning state, and the FQDN (public URL) if it has external ingress. Use DefaultAzureCredential.",
+      "expected_output": "begin_update with ContainerAppUpdate, Scale(min_replicas=2, max_replicas=10), list_by_resource_group iterator, ca.configuration.ingress.fqdn, ca.provisioning_state",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code to add a Dapr state store component to an existing Container Apps environment 'my-env' in resource group 'myRG'. The state store should use Azure Blob Storage with account name 'mystorageaccount'. The storage key should be referenced as a secret (not hardcoded). Show how to add the secret to the environment and reference it in the Dapr component metadata.",
+      "expected_output": "dapr_components.create_or_update, DaprComponent with component_type='state.azure.blobstorage', DaprMetadata list with name/value and name/secret_ref entries, Secret defined in configuration.secrets first",
+      "files": []
+    }
+  ]
+}

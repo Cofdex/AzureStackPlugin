@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-aks",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to create an AKS cluster named 'prod-cluster' in resource group 'myRG' in eastus. Use the ContainerServiceClient with DefaultAzureCredential. Configure: 1 system node pool with 3 Standard_DS2_v2 nodes, system-assigned managed identity (not service principal), and kubernetes version 1.29.0. Wait for the cluster to be fully provisioned and print the FQDN. Show all imports.",
+      "expected_output": "ContainerServiceClient not AKSClient, begin_create_or_update on managed_clusters, ManagedCluster with agent_pool_profiles list, ManagedClusterAgentPoolProfile with mode='System', identity={'type':'SystemAssigned'}, .result(timeout=900), cluster.fqdn",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write Python code to get the admin kubeconfig for an AKS cluster 'prod-cluster' in 'myRG' and save it to ~/.kube/config. Then add a second user node pool named 'workerpool' with 2 Standard_DS3_v2 nodes and the label workload=batch. Use DefaultAzureCredential.",
+      "expected_output": "list_cluster_admin_credentials not get_credentials, creds.kubeconfigs[0].value as bytes, write bytes to file, begin_create_or_update on agent_pools, AgentPool(count=2, vm_size=..., node_labels=..., mode='User')",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code to list all AKS clusters in a subscription, filter to only show clusters with provisioning_state == 'Succeeded', and for each print: name, resource group, kubernetes version, and number of nodes in each node pool. Then show how to scale the system node pool of 'prod-cluster' in 'myRG' from 3 to 5 nodes.",
+      "expected_output": "managed_clusters.list() not list_by_subscription, filter on provisioning_state, cluster.agent_pool_profiles for node count, agent_pools.begin_create_or_update with AgentPool(count=5) for scaling",
+      "files": []
+    }
+  ]
+}

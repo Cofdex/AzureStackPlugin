@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-file-shares",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to work with Azure File Shares. Connect using DefaultAzureCredential to storage account 'myaccount'. Create a file share 'reports' if it doesn't exist. Upload a local CSV file 'sales_report.csv' to the path 'monthly/2024/report.csv' in the share. Then list all files and subdirectories in the 'monthly/2024' directory. Show the correct method name for listing (common mistake: using wrong method name).",
+      "expected_output": "ShareServiceClient with DefaultAzureCredential, get_share_client, create_share, get_file_client('monthly/2024/report.csv'), upload_file with open('sales_report.csv', 'rb'), list_directories_and_files NOT list_files, item.is_directory check",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write Python code to download a file from Azure File Shares and save it locally. The file is at path 'reports/monthly/2024/report.csv' in share 'data'. Show the correct pattern for downloading — including the method that must be called on the download result to get the bytes. Also show how to stream the file directly to a local file without loading it all into memory. Use connection string auth.",
+      "expected_output": "ShareFileClient or share.get_file_client, download_file() returns stream NOT bytes directly, .readall() to get bytes, .readinto(file_obj) to stream to file, open local file in 'wb' mode",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code to copy files between Azure File Share directories and manage file metadata. Show how to: (1) copy a file from 'archive/old-report.csv' to 'processed/old-report.csv' within the same storage account, (2) set custom metadata on the copied file with keys 'processed_by' and 'processed_date', (3) get a file's properties including its size and last modified time, (4) delete the original file from archive.",
+      "expected_output": "start_copy_from_url(source_file_client.url), set_file_metadata({'processed_by': ..., 'processed_date': ...}), get_file_properties().size and .last_modified, delete_file()",
+      "files": []
+    }
+  ]
+}

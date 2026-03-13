@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-openai",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to call Azure OpenAI for a chat completion. The Azure OpenAI resource is at 'https://myresource.openai.azure.com/', the deployment name is 'gpt-4o-prod', and API version is '2024-08-01-preview'. Use DefaultAzureCredential for auth (not API key). Send a system message 'You are a helpful assistant' and user message 'Explain vector databases in one paragraph'. Print the response text. Show all imports and correct parameter names.",
+      "expected_output": "AzureOpenAI client with azure_endpoint and api_version, get_bearer_token_provider(DefaultAzureCredential(), scope), azure_ad_token_provider= param, model='gpt-4o-prod' is deployment name NOT model family, response.choices[0].message.content",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write Python code using Azure OpenAI to generate embeddings for a list of 3 text strings, then compute cosine similarity between the first and second embedding. Use API key auth (key from env var AZURE_OPENAI_KEY). The embeddings deployment is named 'text-embedding-ada-002-deploy'. Show how to handle the response structure and extract the embedding vectors.",
+      "expected_output": "AzureOpenAI with api_key and azure_endpoint, client.embeddings.create(model='text-embedding-ada-002-deploy', input=texts), response.data[0].embedding as list of floats, numpy or manual cosine similarity",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code to call Azure OpenAI with streaming enabled for a chat completion. The deployment is 'gpt-4o-prod'. Stream the response and print each chunk as it arrives (not waiting for the full response). Then show how to use function calling (tools): define a get_weather tool that accepts city and unit parameters, call the model with it, and show how to detect when the model wants to call the function and extract the arguments.",
+      "expected_output": "stream=True, for chunk in response: chunk.choices[0].delta.content, tools=[{'type':'function','function':{...}}], finish_reason=='tool_calls', choice.message.tool_calls[0].function.arguments json.loads",
+      "files": []
+    }
+  ]
+}

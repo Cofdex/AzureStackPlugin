@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-queue-storage",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to send 5 messages to an Azure Queue Storage queue named 'job-queue'. Use DefaultAzureCredential with account URL 'https://myaccount.queue.core.windows.net'. Send: 3 messages immediately, 1 with a 30-second visibility delay (won't be visible for 30s), and 1 that expires after 2 minutes. Show how to create the QueueClient and handle the case where the queue doesn't exist yet.",
+      "expected_output": "QueueClient with DefaultAzureCredential and account_url, send_message() calls, visibility_timeout=30 for delayed, time_to_live=120 for expiring, create_queue() with try/except ResourceExistsError",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write a Python worker loop that processes messages from Azure Queue Storage queue 'job-queue'. The worker should: receive up to 5 messages at a time with a 60-second visibility timeout, process each message (parse JSON body), delete successfully processed messages, and abandon (do nothing) failed ones so they become visible again. Show the critical parameter needed for delete_message and explain why a stale pop_receipt would fail.",
+      "expected_output": "receive_messages(max_messages=5, visibility_timeout=60), iterate messages, delete_message(msg.id, msg.pop_receipt) with BOTH params, pop_receipt is temporary token that changes on each receive, no-op for failure (message becomes visible after timeout)",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code to inspect an Azure Queue Storage queue: peek at the next 3 messages without locking them, get the approximate message count, and update the content and visibility timeout of a specific message that was already received. Explain when you'd use peek vs receive. Use connection string auth.",
+      "expected_output": "QueueClient.from_connection_string, peek_messages(max_messages=3) - no pop_receipt returned, get_queue_properties().approximate_message_count, update_message(msg.id, msg.pop_receipt, visibility_timeout=60, content=...) - returns new pop_receipt",
+      "files": []
+    }
+  ]
+}

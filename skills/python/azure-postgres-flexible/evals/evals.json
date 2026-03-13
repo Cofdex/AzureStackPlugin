@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-postgres-flexible",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to connect to an Azure PostgreSQL Flexible Server named 'myserver' with database 'appdb'. Use psycopg2 with a ThreadedConnectionPool of min 2, max 10 connections. The username is 'appuser' and password from env var DB_PASSWORD. Show the correct connection parameters including SSL mode (required for Azure), and the correct username format. Then demonstrate getting a connection from the pool, running a parameterized SELECT query, and returning the connection to the pool.",
+      "expected_output": "sslmode='require' not disable, user='appuser@myserver' with @servername, ThreadedConnectionPool, pool.getconn() and pool.putconn(conn) in try/finally, cursor.execute with %s placeholders not ? or $1",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write async Python code using asyncpg to connect to Azure PostgreSQL Flexible Server 'myserver', database 'appdb'. Create a connection pool and implement two async functions: create_user(name, email) that inserts and returns the new user's id, and get_users_by_status(status) that returns a list of user dicts. Show the correct placeholder syntax for asyncpg and how to convert asyncpg Records to dicts.",
+      "expected_output": "asyncpg.create_pool with ssl='require' and user with @servername, $1 $2 placeholders NOT %s, conn.fetchrow for insert RETURNING id, conn.fetch for list, dict(row) to convert Record, async with pool.acquire() as conn",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code to connect to Azure PostgreSQL Flexible Server using Azure AD (Entra ID) token authentication instead of a password. Use DefaultAzureCredential to get a token for the correct Azure resource URL. Show the token refresh pattern for long-running applications. Use asyncpg for the connection.",
+      "expected_output": "DefaultAzureCredential, get_token('https://ossrdbms-aad.database.windows.net/.default'), pass token.token as password parameter, note about ~1h token expiry, refresh pattern",
+      "files": []
+    }
+  ]
+}

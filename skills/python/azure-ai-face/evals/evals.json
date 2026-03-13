@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-ai-face",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code using Azure AI Face SDK to detect faces in a JPEG image file 'group_photo.jpg'. Use the latest detection and recognition models. Return face IDs, face rectangles, and head pose attributes. Print how many faces were detected and the bounding box for each. Use AzureKeyCredential for auth. Show the correct import path and explain the face ID TTL limitation.",
+      "expected_output": "from azure.ai.vision.face import FaceClient, FaceDetectionModel.DETECTION03, FaceRecognitionModel.RECOGNITION04, return_face_id=True, return_face_attributes=[FaceAttributeType.HEAD_POSE], face.face_rectangle, face.face_id expires after 24h",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write Python code to build a face recognition system using Azure AI Face. Create a LargePersonGroup, add 2 persons (Alice and Bob) each with 2 training photos, train the group (waiting for completion), then identify which person appears in a new test photo. Show the complete workflow including the LRO training wait and how to interpret identification results with confidence scores.",
+      "expected_output": "FaceAdministrationClient for group/person management, large_person_group.create, large_person_group_person.create, add_face per person, begin_train().result() for LRO, FaceClient.identify_from_large_person_group, candidates with person_id and confidence",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code to verify whether two photos are of the same person using Azure AI Face. Load 'photo_a.jpg' and 'photo_b.jpg', detect faces in each, then verify if the first face in photo A matches the first face in photo B. Handle the case where no face is detected in one of the images. Print whether they're the same person and the confidence score. Use AzureKeyCredential.",
+      "expected_output": "detect on both images with return_face_id=True, check len(faces) > 0 before proceeding, verify_face_to_face(face_id1=..., face_id2=...), result.is_identical, result.confidence",
+      "files": []
+    }
+  ]
+}

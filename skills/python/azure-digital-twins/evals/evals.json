@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-digital-twins",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to work with Azure Digital Twins. Create a twin 'building-1' using the DTDL model 'dtmi:com:example:Building;1' with properties Temperature=21.5 and OccupancyCount=42. Then update the Temperature to 22.0 using the correct update method. Finally create a twin 'floor-1' and a relationship 'building-1 hasFloor floor-1'. Show the correct method name for creating twins (not create, not create_or_replace).",
+      "expected_output": "DigitalTwinsClient, upsert_digital_twin NOT create_digital_twin, twin dict with $metadata.$model, update using JSON Patch list with op/path/value, upsert_relationship with all required fields, both twin endpoints must exist before relationship",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write Python code to query an Azure Digital Twins graph. Run three queries: (1) get all twins of model 'dtmi:com:example:Room;1', (2) find all rooms where Temperature > 25, (3) traverse relationships to find all sensors connected to 'building-1' via 'contains' relationships. Show how to iterate the results (common mistake: treating ItemPaged as a list directly).",
+      "expected_output": "query_twins returns ItemPaged - iterate with for loop NOT list() directly, IS_OF_MODEL() in KQL, WHERE property filter, JOIN...RELATED for relationship traversal, each row is a dict",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code to upload a DTDL model to Azure Digital Twins and manage the twin lifecycle. Upload a model for a 'Sensor' interface with a Temperature telemetry property and a Location property. Create a sensor twin, update the Location property, publish telemetry data {Temperature: 23.5}, then delete the twin (handling relationship cleanup first). Show the required version format in DTDL @id.",
+      "expected_output": "create_models with list of DTDL dicts, @id must include version like 'dtmi:com:example:Sensor;1', JSON Patch list for update, publish_telemetry(digital_twin_id, payload=json.dumps({...})), delete relationships before delete_digital_twin",
+      "files": []
+    }
+  ]
+}

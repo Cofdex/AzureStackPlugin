@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-ai-video-indexer",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to upload a video to Azure Video Indexer using the REST API. The video is accessible at URL 'https://myblob.blob.core.windows.net/videos/demo.mp4'. Use DefaultAzureCredential to get an access token. The account is in the 'trial' location with account ID from env var VIDEO_INDEXER_ACCOUNT_ID. Show the correct API endpoint format, required headers, and how to get the video_id from the response. Explain why there's no pip package to install.",
+      "expected_output": "requests library not any SDK, DefaultAzureCredential().get_token('https://api.videoindexer.ai/.default').token, POST to https://api.videoindexer.ai/{location}/Accounts/{account_id}/Videos, Authorization Bearer header, response.json()['id'] for video_id",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write Python code to poll Azure Video Indexer until a video finishes processing, then extract the top 5 keywords and full transcript from the insights. The video_id is already known. Show how to check the processing state and what state value indicates completion. Extract transcript entries with their timestamps. Show that Video Indexer has emotions but NOT sentiment analysis.",
+      "expected_output": "GET /Videos/{videoId}/Index endpoint, polling loop checking state == 'Processed' NOT 'Completed', insights['keywords'] list, insights['transcript'] with text and instances[0]['start'], insights['emotions'] not 'sentiment'",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write a Python helper class VideoIndexerClient that wraps the Azure Video Indexer REST API. Implement: upload_from_url(url, name) -> video_id, wait_for_processing(video_id, timeout=600) -> insights_dict, get_transcript(video_id) -> list of {text, start_time}, and delete_video(video_id). Use DefaultAzureCredential. Handle token refresh (tokens expire).",
+      "expected_output": "class with requests session, token refresh on 401 or time-based, base_url with location and account_id, poll loop with time.sleep(15), extract transcript from insights['videos'][0]['insights']['transcript'], DELETE request for delete",
+      "files": []
+    }
+  ]
+}

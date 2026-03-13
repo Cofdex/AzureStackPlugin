@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-communication-services",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to send an HTML email using Azure Communication Services. Use connection string auth (from env var ACS_CONNECTION_STRING). The sender is 'noreply@mycompany.azurecomm.net', recipient is 'user@example.com'. Include both HTML and plain text content. Show the correct method name for sending (common mistake: using the wrong method), and show how to wait for the send to complete and check if it succeeded.",
+      "expected_output": "EmailClient.from_connection_string, begin_send() NOT send(), poller.result() to wait, result.status == 'Succeeded', message dict with senderAddress/recipients/content structure",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write Python code to send SMS messages using Azure Communication Services. Send a single SMS from your ACS phone number '+15551234567' to '+15559876543' with delivery report enabled. Use DefaultAzureCredential with ACS endpoint. Show the correct parameter name for the sender number (Python keyword conflict), and how to check if the send was successful from the response.",
+      "expected_output": "SmsClient with DefaultAzureCredential, from_='...' with underscore not from=, to=['+15559876543'] as list not string, results = client.send(...), for result in results: result.successful, result.http_status_code",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code to create a Communication Services user and issue an access token for them. The user needs access to both Chat and VoIP. Then show how to refresh the token before it expires and revoke all tokens for the user when they log out. Use connection string auth. Show how to get the user ID from the created user object.",
+      "expected_output": "CommunicationIdentityClient.from_connection_string, create_user(), user.properties['id'] NOT user.id, get_token(user, scopes=[CommunicationTokenScope.CHAT, CommunicationTokenScope.VOIP]), token_result.token, revoke_tokens(user) on logout",
+      "files": []
+    }
+  ]
+}

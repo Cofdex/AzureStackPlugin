@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-sql",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to connect to Azure SQL Database server 'myserver.database.windows.net', database 'appdb', using pyodbc with SQL authentication (user 'appuser', password from env var DB_PASSWORD). Show the correct ODBC driver version for Azure SQL. Then execute a parameterized query to find all active users older than 25, using the correct placeholder syntax for pyodbc/SQL Server (not PostgreSQL style). Return results as a list of dicts.",
+      "expected_output": "ODBC Driver 18 for SQL Server not 13, ? placeholders NOT %s, tuple params, cursor.fetchall(), column name access via cursor.description or row index, Encrypt=yes in connection string",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write Python code to connect to Azure SQL Database using Azure AD (Entra ID) authentication via pyodbc. The server is 'myserver.database.windows.net', database 'appdb'. Use DefaultAzureCredential to get a token. Show the token encoding pattern needed for pyodbc (struct.pack with the correct format), and the correct connection attribute constant. Include a note about token expiration.",
+      "expected_output": "struct.pack with '<I{n}s' format, token.token.encode('utf-16-le'), SQL_COPT_SS_ACCESS_TOKEN attribute (1256), attrs_before={1256: token_struct}, no password in connection string, token expires ~1h",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code using SQLAlchemy to connect to Azure SQL Database. Use pyodbc as the driver with SQL auth. Show the correct connection string format for SQLAlchemy with Azure SQL. Then create an engine with appropriate pool settings for Azure (pool_recycle matching token expiry). Write a simple ORM model class User and show how to query all active users using SQLAlchemy's text() for a raw parameterized query.",
+      "expected_output": "mssql+pyodbc:///?odbc_connect=urllib.parse.quote_plus(...), ODBC Driver 18, pool_recycle=3600, text() with :param style not ? or %s, {'param': value} dict passed to execute",
+      "files": []
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-notification-hubs",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to send a push notification to iOS devices via Azure Notification Hubs. The namespace is 'mycompany', hub name is 'myhub'. Generate a SAS token using the 'DefaultFullSharedAccessSignature' key. Then send an APNS notification with the correct Content-Type header and format. Show why there's no SDK send method and what headers are required for the REST API call.",
+      "expected_output": "generate_sas_token function with hmac/hashlib, requests.post to https://{namespace}.servicebus.windows.net/{hub}/messages/?api-version=2015-01, Authorization: SharedAccessSignature header, ServiceBusNotification-Format: apple header, APNS JSON payload with aps dict",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write Python code to send a push notification to specific users using Azure Notification Hubs tag expressions. Target users who are either in tag 'premium-user' or 'beta-tester'. Use an FCM (Android) notification format. Show the header for tag expressions and the FCM v1 payload format. Use a pre-built SAS token function.",
+      "expected_output": "ServiceBusNotification-Tags header with 'premium-user || beta-tester', ServiceBusNotification-Format: gcm header, FCM payload {'message':{'notification':{...}}} for v1 format, POST to messages endpoint",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code to configure an Azure Notification Hub with APNS credentials using the management SDK (azure-mgmt-notificationhubs). Create or update a hub named 'myhub' in namespace 'mycompany' and resource group 'myRG' with APNS token-based authentication (key_id, app_name, app_id, token, endpoint). Then list all hubs in the namespace.",
+      "expected_output": "NotificationHubsManagementClient with DefaultAzureCredential, notification_hubs.create_or_update with apns_credential in properties, APNS production endpoint 'https://api.push.apple.com/', notification_hubs.list to enumerate hubs",
+      "files": []
+    }
+  ]
+}

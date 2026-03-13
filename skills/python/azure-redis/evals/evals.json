@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-redis",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to connect to Azure Cache for Redis named 'mycache.redis.cache.windows.net' using the access key from environment variable REDIS_KEY. Configure it for production use with connection pooling (max 20 connections), SSL, and string response decoding. Then implement a session cache: store a user session dict as JSON with a 1-hour TTL, retrieve it, check for cache miss, and delete it on logout.",
+      "expected_output": "port=6380 not 6379, ssl=True, ssl_cert_reqs='none' not 'required', decode_responses=True, ConnectionPool with max_connections=20, json.dumps/loads for dict storage, r.set with ex=3600, if value is None for cache miss",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write Python code using Azure Redis to implement a rate limiter. For each API request, check if a user (identified by user_id) has exceeded 100 requests per minute. Use Redis INCR and EXPIRE commands atomically using a pipeline. If the limit is exceeded return True (rate limited), otherwise return False. Also show how to implement a leaderboard using Redis sorted sets: add a score, get the top 10, and get a user's rank.",
+      "expected_output": "r.pipeline(transaction=True), pipe.incr(key), pipe.expire(key, 60) if new key, pipe.execute(), r.zadd, r.zrevrange with withscores=True, r.zrevrank",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write async Python code using redis.asyncio (the built-in async support in redis-py 4+) to connect to Azure Redis and implement a pub/sub pattern. One coroutine publishes a message to channel 'notifications', and another subscribes to that channel and processes incoming messages for 30 seconds. Show the correct async connection setup and how to iterate messages from the subscription.",
+      "expected_output": "import redis.asyncio as aioredis, async with aioredis.Redis(...), pubsub = r.pubsub(), await pubsub.subscribe('notifications'), async for message in pubsub.listen(), message['type'] == 'message' check, ssl_cert_reqs='none'",
+      "files": []
+    }
+  ]
+}

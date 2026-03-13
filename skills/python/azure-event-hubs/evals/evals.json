@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-event-hubs",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to send telemetry events to an Azure Event Hub named 'telemetry'. Use DefaultAzureCredential with namespace 'myiot.servicebus.windows.net'. Send a batch of 5 JSON events like {\"device_id\": \"sensor-1\", \"temperature\": 22.5}. Show how to create and fill the batch, handle the case where a single event is too large for the batch, and send it.",
+      "expected_output": "EventHubProducerClient with DefaultAzureCredential, create_batch(), batch.add(EventData(json.dumps(...))), try/except ValueError for batch full, producer.send_batch(batch), context manager",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write a Python Event Hub consumer that reads events from all partitions of 'telemetry' hub using EventHubConsumerClient. Use the '$Default' consumer group and DefaultAzureCredential. Implement an on_event callback that prints the event body and partition_id. Start receiving and let it run for 10 seconds then stop. Show the correct callback signature.",
+      "expected_output": "EventHubConsumerClient with DefaultAzureCredential, def on_event(partition_context, event): with both params, event.body_as_str() or event.body_as_json(), client.receive(on_event=on_event), threading or time.sleep to stop",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Show how to use Azure Event Hubs with checkpointing for reliable processing. Use EventHubConsumerClient with BlobCheckpointStore backed by an Azure Storage account. Configure the consumer to checkpoint every 10 events. Use DefaultAzureCredential for both Event Hubs and Blob Storage auth. Show the imports and the on_event handler that updates the checkpoint.",
+      "expected_output": "BlobCheckpointStore with BlobServiceClient and DefaultAzureCredential, EventHubConsumerClient with checkpoint_store=, partition_context.update_checkpoint() in on_event, counter logic for every 10 events",
+      "files": []
+    }
+  ]
+}

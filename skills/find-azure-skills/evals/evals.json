@@ -1,0 +1,30 @@
+{
+  "skill_name": "find-azure-skills",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need to build a Python app that reads PDFs and invoices, extracts the line items and totals, and stores them in a database. What Azure skills should I use?",
+      "expected_output": "Recommends azure-ai-document-intelligence for PDF extraction, plus a storage skill (azure-cosmos or azure-sql or azure-postgres-flexible), and azure-identity for auth. Should mention azure-blob-storage as optional input staging."
+    },
+    {
+      "id": 2,
+      "prompt": "Which skills do you have for streaming telemetry from IoT devices and then querying the data later?",
+      "expected_output": "Recommends azure-event-hubs for high-throughput telemetry ingestion, and azure-monitor-query or azure-monitor-ingestion for querying / storing logs. May also mention azure-functions for processing."
+    },
+    {
+      "id": 3,
+      "prompt": "I want to write Terraform to deploy a Container Apps environment with a Key Vault. Which skill(s) cover this?",
+      "expected_output": "Recommends azure-terraform (design category) as the primary skill. May also note azure-container-apps and azure-keyvault exist as Python SDK skills but Terraform is covered by azure-terraform."
+    },
+    {
+      "id": 4,
+      "prompt": "Show me all available Azure skills",
+      "expected_output": "Renders or summarizes the full skills catalog with all 52 skills organized by category (design, AI/ML, storage, messaging, compute, security, observability, etc.)"
+    },
+    {
+      "id": 5,
+      "prompt": "I'm building a real-time voice assistant that listens to user speech, sends it to GPT, and speaks the response back. What skills do I need?",
+      "expected_output": "Recommends azure-ai-voicelive for real-time bidirectional voice streaming, azure-openai for GPT responses, and azure-identity for auth. May mention azure-ai-transcription as an alternative for non-real-time."
+    }
+  ]
+}

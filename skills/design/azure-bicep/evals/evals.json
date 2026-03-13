@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-bicep",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write a Bicep template to deploy a complete web application stack: App Service Plan (S1 SKU), App Service (Linux, Python 3.11), Key Vault (with RBAC authorization), and an Application Insights instance. The App Service should have the App Insights connection string injected as an app setting, referencing the App Insights resource symbolically (not using the reference() function). Use parameters for environment and location. Apply @secure() where appropriate.",
+      "expected_output": "@secure() on sensitive params, symbolic references like appInsights.properties.ConnectionString not reference(), enableRbacAuthorization: true on Key Vault, appSettings with APPLICATIONINSIGHTS_CONNECTION_STRING, correct API versions, @description decorators",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write a Bicep template that uses a loop to create 3 Azure Storage containers ('raw', 'processed', 'archive') in an existing storage account passed as a parameter. Also add a conditional resource: only create an Azure CDN profile in 'prod' environment. Show the correct loop syntax and conditional syntax in Bicep.",
+      "expected_output": "param containers array = ['raw', 'processed', 'archive'], resource ... = [for name in containers: {...}], resource cdn ... = if (environment == 'prod') {...}, unique resource name per iteration",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write a reusable Bicep module that provisions an Azure Cosmos DB account with a SQL database and container, accepting parameters for account name, database name, container name, partition key path, and throughput. Then show a main.bicep that calls this module and also calls a separate network module. Show how outputs flow between modules.",
+      "expected_output": "module definition with params and outputs, parent/child resource syntax for db and container, PartitionKey in container, module call in main.bicep with name and params, module.outputs.property to reference module output",
+      "files": []
+    }
+  ]
+}

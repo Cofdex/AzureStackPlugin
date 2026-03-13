@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-cosmos-mongodb",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to connect to Azure Cosmos DB using the MongoDB API. The Cosmos DB account is 'mycosmosaccount' and the access key is stored in environment variable COSMOS_KEY. Connect to the database 'ecommerce' and collection 'products'. Show the exact connection string format with the correct port, protocol, and required parameters. Then insert a product document and find all products where price > 50, returning only name and price fields.",
+      "expected_output": "mongodb:// protocol NOT mongodb+srv://, port 10255 NOT 27017, replicaSet=globaldb in connection string, ssl=true, MongoClient from pymongo, find({'price': {'$gt': 50}}, {'name': 1, 'price': 1, '_id': 0})",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write a Python class ProductRepository for Cosmos DB MongoDB API that implements: find_by_category(category) using a query with the partition key, upsert(product_dict) using update_one with upsert=True matching on product_id field, bulk_insert(products_list) using insert_many, and delete(product_id). Add retry logic for the RU throttling error (error code 16500) in the upsert method.",
+      "expected_output": "pymongo MongoClient, update_one({'product_id': ...}, {'$set': ...}, upsert=True), insert_many, OperationFailure catch with e.code == 16500 for throttling, exponential backoff retry",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Show how to perform an aggregation pipeline on a Cosmos DB MongoDB API collection 'orders'. The pipeline should: filter orders from the last 30 days, group by customer_id to get total order count and sum of order_value, sort by total descending, and limit to top 10 customers. Use Python pymongo and show how to iterate the results.",
+      "expected_output": "collection.aggregate([{'$match': ...}, {'$group': {'_id': '$customer_id', 'count': {'$sum': 1}, 'total': {'$sum': '$order_value'}}}, {'$sort': ...}, {'$limit': 10}]), iterate result cursor",
+      "files": []
+    }
+  ]
+}

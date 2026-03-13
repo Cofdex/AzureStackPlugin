@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-datalake",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to connect to Azure Data Lake Storage Gen2 account 'mydatalake' and upload a large Parquet file (500 MB) using the correct chunked upload pattern. Create the directory 'raw/2024/01' if it doesn't exist, then upload the file using append_data and flush_data with 4 MB chunks. Show the correct endpoint URL format (common mistake: using wrong subdomain). Use DefaultAzureCredential.",
+      "expected_output": "account_url with dfs.core.windows.net NOT blob.core.windows.net, DataLakeServiceClient, get_file_system_client, create_directory, get_file_client, create_file(), append_data(chunk, offset=offset, length=len(chunk)), flush_data(total_size) at end",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write Python code to list all files and folders under the 'processed/' path in a Data Lake filesystem 'analytics', filter to only .parquet files, and for each file print its name, size, and last modified date. Then show how to atomically rename/move the directory 'staging/batch-001' to 'processed/batch-001' without copying data. Use DefaultAzureCredential.",
+      "expected_output": "DataLakeServiceClient with dfs endpoint, get_file_system_client, get_paths('processed/'), path.is_directory check, path.content_length, rename_directory('processed/batch-001') NOT copy+delete",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code to set POSIX-style ACL permissions on a Data Lake Storage Gen2 directory 'sensitive-data' and all its contents recursively. Grant read and execute (r-x) access to a specific Azure AD group (object ID: 'aaaabbbb-1111-2222-3333-ccccddddeeee'). Also show how to get the current ACL of a file to verify the permissions were applied. Use DefaultAzureCredential.",
+      "expected_output": "DataLakeDirectoryClient, set_access_control(acl=...) with 'user:object-id:r-x' format, update_access_control_recursive for recursive, AccessControlChangeOptions, get_access_control() to verify",
+      "files": []
+    }
+  ]
+}

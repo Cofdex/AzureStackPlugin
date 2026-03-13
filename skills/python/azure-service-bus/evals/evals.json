@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-service-bus",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to send 3 messages to an Azure Service Bus queue named 'orders'. Use DefaultAzureCredential for auth with the namespace 'mycompany.servicebus.windows.net'. Send them as a batch (not individually). Each message should be a JSON string like {\"order_id\": 1}. Include all imports and show how to create the batch and send it.",
+      "expected_output": "ServiceBusClient with DefaultAzureCredential, get_queue_sender, create_message_batch(), batch.add_message(ServiceBusMessage(...)), sender.send_messages(batch), context managers with 'with' statements",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write Python code to receive messages from a Service Bus queue 'orders' and process them with at-least-once delivery. Use DefaultAzureCredential. Receive up to 10 messages, print each message body, then complete (acknowledge) each one. Show how to handle the case where message processing fails — abandon the message so it goes back to the queue. Include proper context manager usage.",
+      "expected_output": "ServiceBusClient, get_queue_receiver, receiver.receive_messages(max_message_count=10), msg.body decoded, receiver.complete_message(msg), receiver.abandon_message(msg) in except block, with statement for both client and receiver",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Show the difference between Azure Service Bus queues and topics/subscriptions in Python code. Write two snippets: (1) send a message to a topic named 'events' with a session_id and subject property set, (2) receive from a subscription named 'analytics' on topic 'events'. Use connection string auth for both. Show how to read message properties like subject and message_id.",
+      "expected_output": "get_topic_sender for topic send, ServiceBusMessage with subject= and session_id=, get_subscription_receiver(topic_name=, subscription_name=), msg.subject and msg.message_id properties",
+      "files": []
+    }
+  ]
+}

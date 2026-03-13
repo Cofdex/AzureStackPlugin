@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-application-insights",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to set up Azure Application Insights telemetry in a FastAPI application using the modern azure-monitor-opentelemetry package (not the deprecated opencensus). The connection string is in env var APPLICATIONINSIGHTS_CONNECTION_STRING. Configure it to automatically track HTTP requests, exceptions, and custom events. Show what the setup looks like at app startup.",
+      "expected_output": "from azure.monitor.opentelemetry import configure_azure_monitor NOT opencensus, configure_azure_monitor(connection_string=...) at startup, automatic instrumentation for FastAPI/Flask via opentelemetry-instrumentation packages",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write Python code to send custom telemetry to Application Insights: (1) a custom event 'UserPurchase' with properties {product_id, amount, user_id}, (2) a custom metric 'checkout_duration_ms' with value 234, (3) track an exception that was caught but should be logged to App Insights. Use the OpenTelemetry SDK approach (azure-monitor-opentelemetry). Show the tracer and meter setup.",
+      "expected_output": "opentelemetry.trace.get_tracer, opentelemetry.metrics.get_meter, tracer.start_as_current_span for custom events, span.set_attribute for properties, meter.create_histogram or create_counter, span.record_exception for exceptions",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code to query Application Insights data using the Azure Monitor Query SDK (not the App Insights SDK). Query for the top 5 most common exceptions in the last 24 hours from the 'exceptions' table in a Log Analytics workspace. The workspace ID is in env var WORKSPACE_ID. Format the results showing exception type, message, and count. Use DefaultAzureCredential.",
+      "expected_output": "LogsQueryClient from azure-monitor-query, query_workspace with workspace_id, KQL query on exceptions table with summarize count() by type/outerMessage, order by, take 5, iterate rows (not dicts)",
+      "files": []
+    }
+  ]
+}

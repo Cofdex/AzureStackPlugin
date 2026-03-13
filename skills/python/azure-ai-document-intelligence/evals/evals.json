@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-ai-document-intelligence",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to extract text and structure from a PDF invoice using Azure AI Document Intelligence. Use the prebuilt invoice model. The PDF is at URL 'https://myblob.blob.core.windows.net/docs/invoice.pdf'. Use DefaultAzureCredential with endpoint 'https://mydocintel.cognitiveservices.azure.com/'. Show how to poll for the result, extract the vendor name, invoice total, and line items. Include the correct package name (not the deprecated one).",
+      "expected_output": "from azure.ai.documentintelligence import DocumentIntelligenceClient NOT azure.ai.formrecognizer, begin_analyze_document('prebuilt-invoice', ...), poller.result(), doc.fields['VendorName'].value_string or .value not .content, fields['InvoiceTotal'].value_currency.amount",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write Python code to analyze a scanned form image using Azure Document Intelligence's prebuilt-read model to extract all text. The image is provided as bytes (already loaded from disk). Show the correct method to pass image bytes (not a URL), iterate over all pages and lines, and extract the full text content. Use API key auth.",
+      "expected_output": "DocumentIntelligenceClient with AzureKeyCredential, begin_analyze_document('prebuilt-read', body=image_bytes) or AnalyzeDocumentRequest, poller.result(), result.pages for page in pages, for line in page.lines, line.content",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code to use Azure Document Intelligence's prebuilt-layout model to extract tables from a document. The document is a multi-page PDF at a URL. Show how to access each table, its cells, row/column indices, and cell content. Also show how to reconstruct a table as a 2D Python list. Use DefaultAzureCredential.",
+      "expected_output": "begin_analyze_document('prebuilt-layout', ...), poller.result(), result.tables, table.cells, cell.row_index and cell.column_index, cell.content, reconstruct 2D list with table grid",
+      "files": []
+    }
+  ]
+}

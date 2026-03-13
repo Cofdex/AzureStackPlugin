@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-devops-sdk",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to connect to Azure DevOps and list all work items assigned to 'alice@company.com' that are in 'Active' state in a project called 'MyProject'. The organization URL is 'https://dev.azure.com/myorg'. Use a Personal Access Token (PAT) from env var AZURE_DEVOPS_PAT for authentication. Show the correct auth pattern for the Azure DevOps Python SDK and how to run a WIQL query.",
+      "expected_output": "BasicAuthentication('', pat) with empty string username, Connection(base_url=org_url, creds=credentials), get_client('azure.devops.v7_1.work_item_tracking.work_item_tracking_client.WorkItemTrackingClient'), query_by_wiql with Wiql(query='SELECT...'), get_work_item for each id",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write Python code using the Azure DevOps Python SDK to: (1) create a new work item of type 'Bug' in project 'MyProject' with title 'Login page crashes on mobile', priority 2, and assigned to 'bob@company.com'; (2) update its state to 'Resolved' and add a comment. Show the JSON patch document format required for creating and updating work items.",
+      "expected_output": "JsonPatchOperation list with op='add', path='/fields/System.Title' etc., create_work_item(document=patch_ops, project='MyProject', type='Bug'), update_work_item for state change, add_comment for comment",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code to list all repositories in an Azure DevOps project and get the latest commit on the main branch for each repo. Use the Git client. Also show how to create a pull request from branch 'feature/new-api' to 'main' with a title and description. Organization is 'myorg', project is 'MyProject'.",
+      "expected_output": "get_client for GitClient, get_repositories(project=), get_commits(repo_id=, search_criteria with item_version for branch), GitPullRequest object with title/description/source_ref_name/target_ref_name, create_pull_request",
+      "files": []
+    }
+  ]
+}

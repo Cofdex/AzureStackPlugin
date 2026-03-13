@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-functions",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write a Python Azure Function (v2 programming model) with two triggers in the same function_app.py: (1) an HTTP POST trigger at route 'items' that reads a JSON body with 'name' and 'value' fields, validates they exist, and returns a 201 response with the created item as JSON; (2) a timer trigger that runs every 5 minutes and logs 'cleanup started'. Set HTTP auth level to FUNCTION. Show all imports.",
+      "expected_output": "func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION), @app.route(route='items', methods=['POST']), req.get_json() not req.body, func.HttpResponse with status_code=201, @app.timer_trigger with schedule='0 */5 * * * *', timer.past_due check",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write a Python Azure Function that uses a Queue Storage trigger to process order messages and writes results to both a Blob Storage output binding and another queue. The queue trigger listens on 'incoming-orders', the blob output writes to 'processed/{id}.json', and the output queue is 'completed-orders'. Show how to write to both output bindings in the same function handler.",
+      "expected_output": "@app.queue_trigger with queue_name= not queue=, @app.blob_output with path=, @app.queue_output, func.Out[str] params, output.set(json.dumps(...)) for both outputs, msg.get_json() for input",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write a Python Azure Function app with an async HTTP trigger that calls an external API using aiohttp. The function should accept a GET request with a 'city' query parameter, call 'https://api.weather.example.com/current?city={city}' asynchronously, and return the weather data as JSON. Handle the case where the city parameter is missing (400) and where the external API fails (502). Show proper async/await patterns.",
+      "expected_output": "async def handler, req.params.get('city'), aiohttp.ClientSession with async with, await session.get(), func.HttpResponse with mimetype='application/json', status_code=400 for missing param, status_code=502 for upstream error",
+      "files": []
+    }
+  ]
+}

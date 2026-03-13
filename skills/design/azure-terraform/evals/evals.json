@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-terraform",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write a Terraform configuration (versions.tf, main.tf, variables.tf) to deploy an Azure AKS cluster with: a resource group, AKS cluster with 1 system node pool (3 nodes, Standard_DS2_v2), system-assigned managed identity, and a separate user node pool for workloads (2 nodes). Pin the AzureRM provider to a specific minor version. Configure remote state in an Azure Storage account. Use for_each for the node pools where appropriate.",
+      "expected_output": "required_providers with version = '~> 3.x.0' pinned, backend azurerm with storage_account_name/container_name/key, azurerm_kubernetes_cluster, identity { type = 'SystemAssigned' }, for_each on node pools or separate resources, sensitive = true on sensitive vars, never hardcode credentials",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write a Terraform module for deploying an Azure storage account that accepts variables for name, resource group, location, tags, and whether to enable hierarchical namespace (for Data Lake). The module should output the storage account ID, primary blob endpoint, and primary DFS endpoint. Then show how to call this module from a root main.tf with two instances (one regular, one ADLS Gen2).",
+      "expected_output": "module directory with variables.tf/main.tf/outputs.tf, azurerm_storage_account with is_hns_enabled variable, output blocks for id and endpoints, module source = './modules/storage', two module blocks with different variable values",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Terraform code to manage multiple environments (dev, prod) for an Azure web application. The config should use tfvars files for environment-specific values. Dev uses cheap SKUs (F1 App Service Plan), prod uses Standard S2. Both share a Key Vault but prod has soft delete enabled with 90-day retention. Show the terraform commands to deploy to each environment and how to avoid the most common Terraform Azure mistakes.",
+      "expected_output": "dev.tfvars and prod.tfvars with different sku values, conditional expressions for environment-specific settings, terraform plan -var-file=prod.tfvars, features {} in provider required, for_each not count for deterministic resources, remote state, no hardcoded credentials",
+      "files": []
+    }
+  ]
+}

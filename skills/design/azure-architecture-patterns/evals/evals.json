@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-architecture-patterns",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "I need to design an architecture for a real-time order processing system for an e-commerce platform. It needs to handle 10,000 orders/minute at peak, process payments, update inventory, send confirmation emails, and support analytics queries without impacting the order processing path. Apply the Azure Well-Architected Framework and recommend specific Azure services for each component.",
+      "expected_output": "Event-driven architecture with Event Hub or Service Bus for order ingestion, Container Apps or Functions for processing, Cosmos DB for orders/inventory, Event Grid for notifications triggering ACS email, separate read model or Synapse for analytics, CQRS pattern, reliability (multiple AZ), security (managed identity, no hardcoded keys)",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "I'm moving from a monolith to microservices on Azure. I have 8 services that need to communicate with each other, share a database, handle authentication, and be independently deployable. Some services have GPU-heavy ML workloads. Recommend the right compute service for each type of service and the networking/communication pattern. Apply CAF naming conventions for the resources.",
+      "expected_output": "Container Apps for most services, AKS for GPU/complex orchestration, separate database per service (not shared), APIM for API gateway, Service Bus for async communication, managed identity for auth, hub-spoke or Container Apps internal ingress for service-to-service, CAF naming like aks-mlworker-prod",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Design a multi-tenant SaaS platform on Azure that needs: tenant data isolation, per-tenant scaling, a shared API layer, centralized logging and monitoring, cost allocation per tenant, and disaster recovery with RPO of 1 hour. What architecture pattern would you recommend and what are the key Azure services?",
+      "expected_output": "Landing zone or tenant-per-subscription pattern, APIM for shared API with tenant routing, Cosmos DB with tenant partition keys or separate databases, Log Analytics with workspace-per-tenant or tags, Azure Cost Management tags, geo-redundant services for DR, multi-region deployment for RTO/RPO",
+      "files": []
+    }
+  ]
+}

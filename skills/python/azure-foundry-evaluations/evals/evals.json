@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-foundry-evaluations",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write Python code to evaluate the groundedness and fluency of RAG (retrieval-augmented generation) responses using the Azure AI Evaluation SDK. You have a dataset as a Python list of dicts with keys: query, response, and context. Configure the evaluators to use an Azure OpenAI deployment 'gpt-4o-eval' at endpoint 'https://myresource.openai.azure.com/'. Run evaluate() and print the mean groundedness and fluency scores. Show the correct model_config format (not a class).",
+      "expected_output": "model_config as plain dict with azure_endpoint/api_key/azure_deployment/api_version, GroundednessEvaluator(model_config=...) and FluencyEvaluator(model_config=...), evaluate(data=..., evaluators={...}, evaluator_config with column_mapping ${data.field} syntax), result['metrics']",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Write Python code to evaluate a live RAG application function using Azure AI Evaluation. The function my_rag(query: str) -> dict returns {'response': str, 'context': str}. Load test queries from 'test_queries.jsonl' (each line has a 'query' field). Run groundedness and BLEU score evaluations, mapping the target function's outputs to evaluator inputs using the correct column_mapping syntax. Save row-level results to 'eval_results.jsonl'.",
+      "expected_output": "evaluate(data='test_queries.jsonl', target=my_rag, ...), column_mapping for target: ${outputs.response} and ${outputs.context} not ${data.field}, BleuScoreEvaluator() without model_config, output_path='eval_results.jsonl'",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Write Python code to create a custom evaluator for Azure AI Evaluation that checks if a response contains a required disclaimer string. The evaluator should return a score of 1.0 if the disclaimer is present and 0.0 if not. Then use it alongside the built-in ContentSafetyEvaluator in a batch evaluate() call. The ContentSafetyEvaluator needs an azure_ai_project configuration. Show how to configure both.",
+      "expected_output": "class DisclaimerEvaluator with __call__(self, *, response, **kwargs), return {'has_disclaimer': 1.0 or 0.0}, ContentSafetyEvaluator(azure_ai_project={subscription_id, resource_group_name, project_name}), both in evaluators dict",
+      "files": []
+    }
+  ]
+}
