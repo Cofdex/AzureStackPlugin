@@ -1,0 +1,104 @@
+{
+  "skill_name": "azure-ai-translation-document",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "I have a folder called 'contracts/2024/' in my Azure Blob Storage source container that has about 50 Word and PDF documents in English. I need to translate all of them to French and German at the same time, saving the results to separate target containers. Write Python code using azure-ai-translation-document that submits the batch job, monitors progress, and prints a summary showing how many succeeded and failed for each language.",
+      "expected_output": "Python code using DocumentTranslationInput with two TranslationTarget entries, begin_translation with inputs=[...], poller.details for summary counts, and per-document status iteration",
+      "files": [],
+      "assertions": [
+        {
+          "text": "Imports DocumentTranslationInput and TranslationTarget from azure.ai.translation.document",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Uses begin_translation(inputs=[DocumentTranslationInput(source_url=..., targets=[TranslationTarget(...), TranslationTarget(...)])]) pattern",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Uses prefix='contracts/2024/' parameter to filter to the subfolder",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Accesses poller.details.documents_succeeded_count and poller.details.documents_failed_count for summary",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Iterates result documents checking document.status == 'Succeeded' and document.error for failures",
+          "passed": false,
+          "evidence": ""
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "My company has legal documents that contain proprietary product names like 'Contoso NanoFiber' and 'Heliogen Catalyst-X' that should never be translated — they must appear verbatim in the output. Write Python code using azure-ai-translation-document to translate a container of documents to Spanish while applying a TSV glossary file (stored at a SAS URL in glossary_sas_url) to enforce these term mappings.",
+      "expected_output": "Python code using TranslationGlossary with glossary_url and file_format='TSV', attached either to begin_translation(glossaries=[...]) or to TranslationTarget(glossaries=[...])",
+      "files": [],
+      "assertions": [
+        {
+          "text": "Imports TranslationGlossary from azure.ai.translation.document",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Creates TranslationGlossary(glossary_url=glossary_sas_url, file_format='TSV') with correct file_format parameter",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Passes the glossary via glossaries=[...] parameter (either in begin_translation or in TranslationTarget)",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Calls client.begin_translation(...) and .result() to execute and retrieve the job",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Accesses document.translated_document_url on successful documents to show output locations",
+          "passed": false,
+          "evidence": ""
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I need to check on all past document translation jobs in my Azure Translator resource and find any that had failures. For any failed operations, I also want to see which specific documents failed and why. Write Python code using azure-ai-translation-document to list all past operations, print a status summary for each, then for any failed operations drill down to list the individual failed documents with their error codes.",
+      "expected_output": "Python code using client.list_translation_statuses() to enumerate operations, and client.list_document_statuses(translation_id=...) to enumerate documents within operations that had failures",
+      "files": [],
+      "assertions": [
+        {
+          "text": "Uses client.list_translation_statuses() to enumerate past operations",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Accesses op.status, op.documents_total_count, op.documents_succeeded_count, op.documents_failed_count on each operation",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Uses client.list_document_statuses(translation_id=op.id) to drill into a specific operation's documents",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Checks document.status and accesses document.error.code and document.error.message for failed documents",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Creates DocumentTranslationClient with AzureKeyCredential or DefaultAzureCredential",
+          "passed": false,
+          "evidence": ""
+        }
+      ]
+    }
+  ]
+}

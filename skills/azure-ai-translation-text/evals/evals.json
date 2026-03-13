@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-ai-translation-text",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write a Python script using the Azure AI Text Translation SDK that takes a list of customer feedback strings and translates each one to both Spanish and Japanese simultaneously. The source language should be auto-detected. Print each result showing: the detected source language and confidence score, then each translation with its language code. Use environment variables AZURE_TEXT_TRANSLATION_APIKEY and AZURE_TEXT_TRANSLATION_REGION for credentials. Include proper error handling.",
+      "expected_output": "Python script using TextTranslationClient with region+AzureKeyCredential, translate() called with list of strings as body and to_language=['es','ja'], accesses detected_language.language, detected_language.score, and iterates item.translations for t.language/t.text",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "I need a Python function using the azure-ai-translation-text SDK that transliterates a list of Chinese (Simplified) strings to Latin (Pinyin romanization). The function should take a list of Chinese strings and return a list of romanized strings. Also show how to find what scripts are supported for Chinese using get_supported_languages().",
+      "expected_output": "Python code using TextTranslationClient.transliterate() with language='zh-Hans', from_script='Hans', to_script='Latn', accesses response[i].text for the romanized output, and uses get_supported_languages() to inspect transliteration scripts",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Build a Python script with the Azure Text Translation SDK to translate HTML content. The input is a list of HTML snippets that may contain profanity — translate them to German, but mark any profanity with asterisks rather than removing it. The HTML tags should be preserved in the output. Use the TranslateInputItem and TranslationTarget classes with appropriate settings.",
+      "expected_output": "Python code using TranslateInputItem with text_type=TextType.HTML and TranslationTarget with language='de', profanity_action=ProfanityAction.MARKED, profanity_marker=ProfanityMarker.ASTERISK. Imports from azure.ai.translation.text.models.",
+      "files": []
+    }
+  ]
+}

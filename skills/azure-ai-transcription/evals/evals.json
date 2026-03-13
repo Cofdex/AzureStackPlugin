@@ -1,0 +1,104 @@
+{
+  "skill_name": "azure-ai-transcription",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "I have a recorded team standup meeting at /tmp/standup.wav with about 4 people talking. Write Python code using azure-ai-transcription to transcribe it and print each spoken phrase on its own line with the speaker ID and timestamp so we can tell who said what.",
+      "expected_output": "Python code that creates a TranscriptionClient, enables TranscriptionDiarizationOptions with max_speakers set, accesses phrase.speaker and phrase.offset_milliseconds on each phrase in result.phrases",
+      "files": [],
+      "assertions": [
+        {
+          "text": "Imports TranscriptionDiarizationOptions from azure.ai.transcription.models",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Creates diarization_options = TranscriptionDiarizationOptions(max_speakers=...) and passes it to TranscriptionOptions",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Accesses phrase.speaker on each phrase (not a string like 'speaker' or a dict key)",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Accesses phrase.offset_milliseconds for timestamps",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Uses client.transcribe() with TranscriptionContent wrapping the options and audio file",
+          "passed": false,
+          "evidence": ""
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "I want to build a customer service call analyzer. The calls are at URLs like https://storage.example.com/calls/call123.wav. Write Python code using azure-ai-transcription to transcribe each call URL and extract: the full transcript text, all phrase timestamps, and flag any phrases that contain specific terms like 'refund', 'complaint', 'escalate'.",
+      "expected_output": "Python code using transcribe_from_url, accessing result.combined_phrases[0].text and iterating result.phrases for timestamps and keyword matching",
+      "files": [],
+      "assertions": [
+        {
+          "text": "Uses client.transcribe_from_url(audio_url, options=options) for URL-based transcription",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Accesses result.combined_phrases[0].text or similar for full transcript",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Iterates result.phrases to get per-phrase text and timestamps",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Uses phrase.offset_milliseconds and phrase.duration_milliseconds for timestamp range",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Creates TranscriptionOptions with locales parameter",
+          "passed": false,
+          "evidence": ""
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I'm building a multilingual podcast transcription service. Audio files can be in English, Spanish, or French — I don't know which upfront. Write Python code using azure-ai-transcription that: auto-detects the language per phrase, applies a phrase list boosting 'Anthropic', 'Claude', 'LLM' for better accuracy, masks profanity, and prints each phrase with its detected locale.",
+      "expected_output": "Python code using TranscriptionOptions with multiple locales, PhraseListProperties with biasing_weight, profanity_filter_mode='Masked', and phrase.locale access per phrase",
+      "files": [],
+      "assertions": [
+        {
+          "text": "Imports PhraseListProperties from azure.ai.transcription.models",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Creates PhraseListProperties(phrases=[...], biasing_weight=...) and passes it as phrase_list to TranscriptionOptions",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Sets profanity_filter_mode='Masked' (or equivalent enum) in TranscriptionOptions",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Passes multiple locales (at least 2 of: en-US, es-ES, fr-FR) for language detection",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "text": "Accesses phrase.locale on each phrase to show detected language",
+          "passed": false,
+          "evidence": ""
+        }
+      ]
+    }
+  ]
+}

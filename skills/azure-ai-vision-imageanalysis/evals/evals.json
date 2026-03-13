@@ -1,0 +1,23 @@
+{
+  "skill_name": "azure-ai-vision-imageanalysis",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write a Python script using the Azure AI Vision Image Analysis SDK that analyzes an image from a URL and extracts: (1) a natural language caption with confidence score, (2) content tags sorted by confidence, and (3) all detected objects with their bounding boxes and names. Use environment variables VISION_ENDPOINT and VISION_KEY for credentials. Print each result clearly labeled. Include error handling.",
+      "expected_output": "Python script using ImageAnalysisClient with analyze_from_url(), passing VisualFeatures.CAPTION, VisualFeatures.TAGS, and VisualFeatures.OBJECTS in a single call. Accesses result.caption.text/confidence, iterates result.tags.list for tag.name/confidence, iterates result.objects.list for obj.tags[0].name and obj.bounding_box.x/y/width/height.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "I have a local image file and need to extract all the text from it using Azure AI Vision. Write a Python function that takes a file path, reads the image, and returns all extracted text as a single string (lines joined with newlines). Also show how to get individual word confidences. Use VISION_ENDPOINT and VISION_KEY env vars.",
+      "expected_output": "Python code using ImageAnalysisClient.analyze() with image_data=f.read() (file bytes, not URL), VisualFeatures.READ, iterating result.read.blocks[].lines[] for line.text, and result.read.blocks[].lines[].words[] for word.text and word.confidence.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Build a Python script using Azure AI Vision that takes a product image URL and generates thumbnail crop suggestions for three aspect ratios: square (1:1), landscape (16:9 ≈ 1.78), and portrait (3:4 = 0.75). Also detect any people in the image and report their locations. Use gender-neutral language for any captions. Print all crop coordinates and people detected.",
+      "expected_output": "Python code using analyze_from_url() with VisualFeatures.SMART_CROPS and VisualFeatures.PEOPLE, passing smart_crops_aspect_ratios=[0.75, 1.0, 1.78] (or similar), gender_neutral_caption=True. Accesses result.smart_crops.list for crop.aspect_ratio and crop.bounding_box, result.people.list for person.bounding_box and person.confidence.",
+      "files": []
+    }
+  ]
+}

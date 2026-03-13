@@ -1,0 +1,44 @@
+{
+  "skill_name": "azure-ai-textanalytics",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I have a list of customer support tickets and need to analyze them using Azure Text Analytics. Show me how to: 1) detect the sentiment of each ticket, 2) extract named entities (like product names, people), and 3) identify any PII that needs to be redacted before storing. Run all three in a single batch using begin_analyze_actions.",
+      "expected_output": "Python code using begin_analyze_actions with RecognizeEntitiesAction, RecognizePiiEntitiesAction, and AnalyzeSentimentAction. Must show iterating over action_results using action_result.kind to dispatch each action type, and accessing doc.redacted_text for PII.",
+      "files": [],
+      "assertions": [
+        {"id": "uses-begin-analyze-actions", "text": "Code calls begin_analyze_actions() rather than three separate API calls"},
+        {"id": "imports-action-classes", "text": "Imports RecognizeEntitiesAction, RecognizePiiEntitiesAction, and AnalyzeSentimentAction from azure.ai.textanalytics"},
+        {"id": "dispatches-by-action-kind", "text": "Iterates action results and checks action_result.kind to dispatch each type (EntityRecognition, PiiEntityRecognition, SentimentAnalysis)"},
+        {"id": "accesses-redacted-text", "text": "Accesses action_result.redacted_text for the PII action results"},
+        {"id": "checks-is-error", "text": "Checks .is_error before accessing result properties on documents or action results"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I'm building a pharmacy management system and need to extract medication information from prescription notes using Azure Text Analytics healthcare NLP. Show me how to use begin_analyze_healthcare_entities to extract medications and their dosages, and how to access the DOSAGE_OF_MEDICATION entity relation to pair them together.",
+      "expected_output": "Code using begin_analyze_healthcare_entities (LRO pattern), iterating doc.entities for healthcare entities, accessing entity.normalized_text, entity.assertion, and using HealthcareEntityRelation.DOSAGE_OF_MEDICATION to extract drug-dosage pairs from doc.entity_relations.",
+      "files": [],
+      "assertions": [
+        {"id": "uses-begin-analyze-healthcare-lro", "text": "Calls begin_analyze_healthcare_entities() using the LRO pattern (not a synchronous method)"},
+        {"id": "imports-HealthcareEntityRelation", "text": "Imports HealthcareEntityRelation from azure.ai.textanalytics"},
+        {"id": "filters-DOSAGE_OF_MEDICATION", "text": "Filters entity relations by HealthcareEntityRelation.DOSAGE_OF_MEDICATION"},
+        {"id": "accesses-normalized-text", "text": "Accesses entity.normalized_text on healthcare entities"},
+        {"id": "extracts-relation-roles", "text": "Accesses relation.roles with role names like 'Medication' and 'Dosage' to pair drug-dosage"}
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I have a multilingual dataset of product reviews in English, French, and Spanish. I need to: 1) detect the language of each review, 2) extract key phrases to build a tag cloud, and 3) run opinion mining to find what specific product aspects customers are positive/negative about. Show me the full code.",
+      "expected_output": "Three separate calls: detect_language() with iso6391_name/confidence_score access, extract_key_phrases() with doc.key_phrases, and analyze_sentiment(show_opinion_mining=True) with mined_opinions iteration accessing target.text, target.sentiment, and assessments.",
+      "files": [],
+      "assertions": [
+        {"id": "calls-detect-language", "text": "Calls client.detect_language() and accesses doc.primary_language.iso6391_name or .name"},
+        {"id": "calls-extract-key-phrases", "text": "Calls client.extract_key_phrases() and accesses doc.key_phrases"},
+        {"id": "uses-show-opinion-mining", "text": "Calls analyze_sentiment(show_opinion_mining=True) to enable opinion mining"},
+        {"id": "accesses-mined-opinions", "text": "Iterates sentence.mined_opinions accessing mined_opinion.target and mined_opinion.assessments"},
+        {"id": "accesses-target-sentiment", "text": "Accesses target.sentiment (and/or assessment.sentiment) on mined opinion targets"}
+      ]
+    }
+  ]
+}
