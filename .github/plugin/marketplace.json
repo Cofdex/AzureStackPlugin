@@ -1,0 +1,18 @@
+{
+  "name": "azure-stack-marketplace",
+  "owner": {
+    "name": "Cofdex"
+  },
+  "metadata": {
+    "description": "Multi-agent software delivery workflow for Azure Python projects",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "azure-stack-plugin",
+      "description": "13 single-responsibility agents, 53 Azure SDK skills, and a continual-learning hook system for building and maintaining Azure Python projects. Covers feature delivery, bugfixes, refactoring, and security audits through a structured multi-agent pipeline.",
+      "version": "1.0.0",
+      "source": "."
+    }
+  ]
+}
