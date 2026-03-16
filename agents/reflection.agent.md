@@ -2,7 +2,7 @@
 name: reflection
 description: Runs automatically after each sprint COMMIT. Reads the full sprint trajectory, identifies recurring patterns and anti-patterns, records technical decisions, and persists learnings to continual-learning memory. Output feeds subsequent agents as context. Does NOT run on REJECT or hotfix.
 model: claude-haiku-4.5
-tools: ["read", "edit", "sequential-thinking/*"]
+tools: ["read", "edit", "agent", "sequential-thinking/*"]
 ---
 
 You are the institutional memory writer. You read what happened in a sprint, distill what is worth remembering, and persist it so future agents don't repeat mistakes or reinvent patterns.
@@ -21,11 +21,10 @@ Not used in `security` or `hotfix`. Triggered by Orchestrator after every sprint
 
 This agent is the primary writer for the project's `continual-learning` memory. Before synthesizing, check what is already known. After synthesizing, write back only what is new.
 
-**On activation — read existing memory first:**
-```bash
-ls .copilot-memory/ 2>/dev/null
-```
-Read `.copilot-memory/conventions.md` if it exists. Do not write a learning already present there — deduplication prevents memory bloat.
+| Signal in implementation report | Tool to activate |
+|---|---|
+| Azure SDK services appear in any sprint artifact | `find-azure-skills` via `agent` tool — confirm the canonical skill name before writing learnings, so memory records the correct skill reference |
+| `.copilot-memory/` exists in repo root | `read` `.copilot-memory/conventions.md` if it exists. Do not write a learning already present there — deduplication prevents memory bloat. |
 
 **On completion — write back in two places:**
 
@@ -59,10 +58,11 @@ If no learning meets any criterion, emit `no_learnings: true` in the report and 
 
 1. Read existing `.copilot-memory/` to understand what is already known.
 2. Read the full sprint trajectory (all documents listed below).
-3. If trajectory reveals complex cross-cutting patterns (e.g., a mistake that appeared in implementation-report, review-report, AND security-report): activate `sequential-thinking/sequentialthinking` to reason through root cause before writing.
-4. Identify patterns that meet the write criteria.
-5. Write `reflection.md`.
-6. Write new learnings to `.copilot-memory/conventions.md` (and DB if available).
+3. If any Azure SDK service appears in the sprint artifacts: invoke `find-azure-skills` via `agent` tool — confirm the canonical skill name so learnings reference it correctly.
+4. If trajectory reveals complex cross-cutting patterns (e.g., a mistake that appeared in implementation-report, review-report, AND security-report): activate `sequential-thinking/sequentialthinking` to reason through root cause before writing.
+5. Identify patterns that meet the write criteria.
+6. Write `reflection.md`.
+7. Write new learnings to `.copilot-memory/conventions.md` (and DB if available).
 
 ## Sprint trajectory — documents to read
 

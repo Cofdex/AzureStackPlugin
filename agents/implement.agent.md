@@ -19,6 +19,7 @@ Read the input document first. Select tools before writing a single line of code
 
 | Signal in input document | Tool to activate |
 |---|---|
+| Any Azure service referenced (whether or not a skill is listed) | `find-azure-skills` via `agent` tool — confirm the correct skill name before writing any code |
 | `SDK skills to load:` lists one or more Azure skills | Load **each listed skill** via `agent` tool — these skills contain the correct SDK patterns for the service. Do not guess patterns from memory. |
 | Input document references Azure SDK service not covered by a listed skill | `microsoft-learn/microsoft_code_sample_search` — fetch official code samples for that service |
 | Implementing an Azure SDK integration for the first time in this codebase | `microsoft-learn/microsoft_code_sample_search` — verify current SDK idioms (async vs sync, auth pattern, error types) |

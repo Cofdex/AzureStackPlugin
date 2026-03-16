@@ -10,6 +10,6 @@
   "category": "development",
   "agents": "agents/",
   "skills": "skills/",
-  "hooks": "hooks/continual-learning/hooks.json",
+  "hooks": "hooks/hooks.json",
   "mcpServers": ".mcp.json"
 }

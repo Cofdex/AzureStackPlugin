@@ -4,6 +4,14 @@ A multi-agent software delivery workflow for Azure Python projects. Provides 13 
 
 ---
 
+## Installation
+
+```bash
+copilot plugin install Cofdex/AzureStackPlugin
+```
+
+---
+
 ## Agents
 
 13 agents, each with a single responsibility. The **Orchestrator** is the sole entry point — all requests are classified and routed from there.
@@ -93,9 +101,45 @@ A hook system persists cross-session knowledge to SQLite:
 
 Hooks fire at `sessionStart` (loads prior knowledge), `postToolUse` (logs outcomes), and `sessionEnd` (analyzes patterns, compacts data).
 
-Install by copying the hook into your project:
+---
+
+## Quality Hooks
+
+### Lint on code generation
+
+Runs [ruff](https://docs.astral.sh/ruff/) automatically after every code edit. Fails immediately so the AI agent can fix issues before moving on.
+
+### Coverage gate (pre-commit)
+
+Blocks `git commit` if test coverage is below **80%**. Requires `pytest-cov`.
+
+### Installation
+
+Copy both hook sets into your project:
+
 ```bash
 cp -r hooks/continual-learning .github/hooks/
+cp -r hooks/quality .github/hooks/
+chmod +x .github/hooks/quality/lint.sh
+```
+
+Install the git pre-commit hook:
+
+```bash
+cp hooks/quality/pre-commit.sh .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+```
+
+Install coverage dependency:
+
+```bash
+uv add --dev pytest-cov ruff
+```
+
+To bypass the coverage gate in an emergency:
+
+```bash
+SKIP_COVERAGE=true git commit -m "..."
 ```
 
 ---

@@ -105,6 +105,19 @@ ADRs are split into two tiers to keep global learning clean and avoid cluttering
 
 ---
 
+## Skill lookup — before routing
+
+Before spawning any agent, check whether the request involves Azure SDK services:
+
+| Signal in the request | Action |
+|---|---|
+| Any Azure service, SDK package, or cloud resource mentioned | Invoke `find-azure-skills` agent — identify the relevant skills and include the skill names in the handoff context passed to downstream agents |
+| No Azure SDK or cloud service involved | Skip — proceed directly to workflow classification |
+
+Pass discovered skill names to Planner or Architecture Agent in the routing payload so they can populate `SDK skills to load:` without running a redundant lookup.
+
+---
+
 ## Workflow classification
 
 | Type | Trigger criteria |
