@@ -1,0 +1,23 @@
+{
+  "skill_name": "drawio-uml",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create a class diagram for a library management system with: Book (title, isbn, available), Author (name, bio), Member (name, email, memberSince), and Loan (loanDate, returnDate). A Book has many Authors. A Member has many Loans. A Loan references one Book. Save as library.drawio.",
+      "expected_output": "A .drawio file with 4 class boxes (Book, Author, Member, Loan), each with the listed attributes and a method section separator, connected by appropriate relationship arrows (association, composition, etc.) with correct UML arrow styles.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Draw a sequence diagram showing the flow of a user placing an order on an e-commerce site. The participants are: Customer, WebApp, OrderService, PaymentGateway, InventoryService. Flow: Customer sends 'placeOrder' to WebApp, WebApp calls 'createOrder' on OrderService, OrderService calls 'checkStock' on InventoryService which returns availability, OrderService calls 'charge' on PaymentGateway which returns confirmation, OrderService returns orderId to WebApp, WebApp returns 'orderConfirmation' to Customer. Save as order-sequence.drawio.",
+      "expected_output": "A .drawio file with 5 lifelines arranged left-to-right, activation bars on active participants, synchronous call arrows with filled arrowheads, return messages with dashed lines, and proper temporal ordering top-to-bottom.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Create an ER diagram for a school database with these tables: students (id PK, name, email, enrollment_date), courses (id PK, title, credits, department), enrollments (id PK, student_id FK, course_id FK, grade, semester), teachers (id PK, name, department), and course_assignments (course_id FK, teacher_id FK). Show all PK/FK relationships with Crow's Foot notation. Save as school-er.drawio.",
+      "expected_output": "A .drawio file with 5 entity tables using the shape=table style, columns properly listed with PK/FK indicators, and Crow's Foot relationship lines (ERone/ERmany) connecting the appropriate columns.",
+      "files": []
+    }
+  ]
+}

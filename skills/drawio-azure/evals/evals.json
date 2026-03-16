@@ -1,0 +1,23 @@
+{
+  "skill_name": "drawio-azure",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create a draw.io diagram for a basic 3-tier web app on Azure: users hit an Application Gateway, which routes to an App Service, which talks to an Azure SQL Database. Put everything in a VNet with proper subnets.",
+      "expected_output": "A valid .drawio XML file with: Users icon outside VNet, Application Gateway in a web subnet, App Service in an app subnet, SQL Database in a data subnet, all within a VNet zone container, with labeled connection arrows between each tier.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I need an Azure architecture diagram showing a hub-spoke network. The hub VNet has an Azure Firewall and VPN Gateway. Two spoke VNets: one with an AKS cluster and Container Registry, another with VMs and a Load Balancer. Show the peering connections between hub and spokes.",
+      "expected_output": "A valid .drawio XML file with: hub VNet zone containing Azure Firewall and VPN Gateway, two spoke VNet zones each with their respective services, dashed or solid connections representing VNet peering between hub and each spoke.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Draw me an event-driven serverless architecture on Azure. Events come from IoT Hub, go through Event Grid to trigger Azure Functions, which write to Cosmos DB and send alerts via Notification Hubs. Include Application Insights for monitoring.",
+      "expected_output": "A valid .drawio XML file with: IoT Hub icon on the left, Event Grid in the middle, Azure Functions receiving events, Cosmos DB and Notification Hubs as outputs, Application Insights connected for monitoring. Left-to-right flow layout.",
+      "files": []
+    }
+  ]
+}
