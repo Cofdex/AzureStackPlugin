@@ -39,7 +39,7 @@ Present results in this structure:
 ## Recommended skill(s) for: [summary of user's task]
 
 ### 1. `<skill-name>` (category: design | python)
-**Package**: `<pip install ...>`
+**Package**: `<uv add ...>`
 **Use for**: <one sentence on why this matches>
 
 ### 2. `<skill-name>` (if multiple apply)

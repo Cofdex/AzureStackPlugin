@@ -21,7 +21,7 @@ healthcare entity extraction, and text summarization.
 ## Install
 
 ```bash
-pip install azure-ai-textanalytics azure-identity
+uv add azure-ai-textanalytics azure-identity
 ```
 
 ## Connect — TextAnalyticsClient

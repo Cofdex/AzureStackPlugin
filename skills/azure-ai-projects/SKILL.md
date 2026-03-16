@@ -18,8 +18,8 @@ The `azure-ai-projects` package is the **high-level Microsoft Foundry SDK**. It 
 evaluations, connections, deployments, datasets, indexes, files, fine-tuning, and telemetry.
 
 ```
-pip install "azure-ai-projects>=2.0.0"
-pip install aiohttp          # async client only
+uv add "azure-ai-projects>=2.0.0"
+uv add aiohttp          # async client only
 ```
 
 ---
@@ -543,7 +543,7 @@ AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING=true
 ```
 
 ```bash
-pip install opentelemetry-sdk azure-core-tracing-opentelemetry azure-monitor-opentelemetry
+uv add opentelemetry-sdk azure-core-tracing-opentelemetry azure-monitor-opentelemetry
 ```
 
 ```python

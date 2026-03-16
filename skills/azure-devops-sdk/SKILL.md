@@ -13,7 +13,7 @@ description: >
 
 ## Package
 ```bash
-pip install azure-devops msrest
+uv add azure-devops msrest
 ```
 
 ## Auth and connection

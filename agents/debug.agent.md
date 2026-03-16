@@ -84,13 +84,13 @@ Investigate bugs in the `bugfix` workflow. Trace from symptom → root cause, re
 
 ```bash
 # Reproduce the bug
-python -m pytest path/to/failing_test.py -x -v 2>&1
+uv run pytest path/to/failing_test.py -x -v 2>&1
 
 # Run with Azure SDK debug logging
-AZURE_LOG_LEVEL=DEBUG python -m pytest path/to/failing_test.py -x -v -s 2>&1
+AZURE_LOG_LEVEL=DEBUG uv run pytest path/to/failing_test.py -x -v -s 2>&1
 
 # Check full test suite for related failures
-python -m pytest -x -q --tb=short 2>&1
+uv run pytest -x -q --tb=short 2>&1
 
 # Run a minimal reproduction script
 python -c "..." 2>&1

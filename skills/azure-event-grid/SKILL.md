@@ -12,7 +12,7 @@ description: >
 
 ## Package
 ```bash
-pip install azure-eventgrid azure-identity
+uv add azure-eventgrid azure-identity
 ```
 
 ## Two event schemas

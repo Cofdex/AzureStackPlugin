@@ -13,7 +13,7 @@ description: >
 
 ## Package
 ```bash
-pip install azure-eventhub azure-eventhub-checkpointstoreblob azure-identity
+uv add azure-eventhub azure-eventhub-checkpointstoreblob azure-identity
 ```
 
 ## Main clients

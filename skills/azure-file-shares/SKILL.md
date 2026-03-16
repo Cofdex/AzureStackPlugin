@@ -13,7 +13,7 @@ description: >
 
 ## Package
 ```bash
-pip install azure-storage-file-share azure-identity
+uv add azure-storage-file-share azure-identity
 ```
 
 ## Client hierarchy

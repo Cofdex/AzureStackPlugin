@@ -20,7 +20,7 @@ environments, and deploying endpoints.
 ## Install
 
 ```bash
-pip install azure-ai-ml azure-identity
+uv add azure-ai-ml azure-identity
 ```
 
 ## Connect to a Workspace

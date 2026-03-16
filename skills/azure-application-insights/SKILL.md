@@ -13,7 +13,7 @@ description: >
 
 ## Package
 ```bash
-pip install azure-monitor-opentelemetry opentelemetry-api
+uv add azure-monitor-opentelemetry opentelemetry-api
 ```
 
 **Do NOT use** `opencensus-ext-azure` — it is end-of-life.

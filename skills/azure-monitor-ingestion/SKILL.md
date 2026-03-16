@@ -19,7 +19,7 @@ chunking — you just pass a list of dicts.
 ## Installation
 
 ```bash
-pip install azure-monitor-ingestion azure-identity
+uv add azure-monitor-ingestion azure-identity
 ```
 
 ## Key concepts before writing code

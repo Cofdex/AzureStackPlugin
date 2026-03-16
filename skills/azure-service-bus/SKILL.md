@@ -13,7 +13,7 @@ description: >
 
 ## Package
 ```bash
-pip install azure-servicebus azure-identity
+uv add azure-servicebus azure-identity
 ```
 
 ## Client hierarchy

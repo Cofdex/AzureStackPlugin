@@ -15,7 +15,7 @@ description: >
 
 # Azure AI Text Translation SDK
 
-Package: `pip install azure-ai-translation-text` (v1.x stable, v2.0b1 preview)
+Package: `uv add azure-ai-translation-text` (v1.x stable, v2.0b1 preview)
 
 ## Client setup
 

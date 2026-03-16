@@ -13,7 +13,7 @@ description: >
 
 ## Package
 ```bash
-pip install azure-functions
+uv add azure-functions
 # DO NOT add azure-functions-worker — it's platform-managed, not user-installed
 ```
 

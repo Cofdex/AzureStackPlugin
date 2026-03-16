@@ -16,7 +16,7 @@ description: >
 
 ## Package
 ```bash
-pip install pymongo
+uv add pymongo
 ```
 
 ## Connection

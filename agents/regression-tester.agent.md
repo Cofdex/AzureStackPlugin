@@ -55,10 +55,10 @@ Read before running any tests:
 
 ```bash
 # 1. Full test suite — capture everything
-python -m pytest -v --tb=short 2>&1 | tee /tmp/regression-after.txt
+uv run pytest -v --tb=short 2>&1 | tee /tmp/regression-after.txt
 
 # 2. Count summary
-python -m pytest -q 2>&1 | tail -5
+uv run pytest -q 2>&1 | tail -5
 ```
 
 Compare against the baseline numbers from `handoff.md`. Do not run only the baseline tests — run the **full suite**. A regression outside the baseline scope is still a regression.

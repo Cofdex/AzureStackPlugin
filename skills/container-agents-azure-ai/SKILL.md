@@ -35,7 +35,7 @@ Two separate SDKs work together: one runs **inside your container** (server side
 ### Installation
 
 ```bash
-pip install azure-ai-agentserver-core
+uv add azure-ai-agentserver-core
 ```
 
 ### Minimal custom agent
@@ -121,7 +121,7 @@ If you already have a Microsoft Agent Framework agent, you can host it without w
 server manually:
 
 ```bash
-pip install azure-ai-agentserver-agentframework
+uv add azure-ai-agentserver-agentframework
 ```
 
 ```python
@@ -165,7 +165,7 @@ curl -N -X POST http://localhost:8088/responses \
 ### Installation
 
 ```bash
-pip install "azure-ai-projects>=2.0.0"
+uv add "azure-ai-projects>=2.0.0"
 ```
 
 ### Key requirement: `allow_preview=True`

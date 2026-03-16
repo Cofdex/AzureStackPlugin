@@ -12,10 +12,10 @@ description: >
 
 ## Packages
 ```bash
-pip install azure-communication-email        # Email
-pip install azure-communication-sms          # SMS
-pip install azure-communication-identity     # Identity/tokens
-pip install azure-identity
+uv add azure-communication-email        # Email
+uv add azure-communication-sms          # SMS
+uv add azure-communication-identity     # Identity/tokens
+uv add azure-identity
 ```
 
 ## Email — EmailClient

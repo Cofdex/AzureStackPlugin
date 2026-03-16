@@ -17,7 +17,7 @@ Covers both **Azure Storage Tables** and **Cosmos DB Tables API** — they share
 ## Installation & Imports
 
 ```python
-pip install azure-data-tables azure-identity
+uv add azure-data-tables azure-identity
 ```
 
 ```python

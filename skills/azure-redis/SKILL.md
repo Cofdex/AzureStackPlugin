@@ -13,9 +13,9 @@ description: >
 
 ## Packages
 ```bash
-pip install redis    # sync + async (redis>=4.2 includes async)
+uv add redis    # sync + async (redis>=4.2 includes async)
 # or
-pip install aioredis  # older async library
+uv add aioredis  # older async library
 ```
 
 ## Client setup

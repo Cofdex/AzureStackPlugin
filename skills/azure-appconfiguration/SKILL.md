@@ -18,7 +18,7 @@ description: >
 
 # Azure App Configuration SDK for Python
 
-Package: `pip install azure-appconfiguration` (v1.8.1+)
+Package: `uv add azure-appconfiguration` (v1.8.1+)
 
 Centralised store for application settings and feature flags. Supports labels (environments), tags, snapshots, conditional updates, and Key Vault secret references.
 

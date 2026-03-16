@@ -19,7 +19,7 @@ harmful content across four categories (Hate, Violence, Sexual, SelfHarm) with m
 scoring, plus custom blocklist management.
 
 ```bash
-pip install azure-ai-contentsafety
+uv add azure-ai-contentsafety
 ```
 
 ---

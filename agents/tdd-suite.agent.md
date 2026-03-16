@@ -1,6 +1,6 @@
 ---
 name: tdd-suite
-description: Designs and writes test cases before implementation. Translates sprint acceptance criteria into failing pytest tests (red phase of TDD). Only runs when Planner sets TDD required: YES in handoff.md. Uses Microsoft Learn MCP and find-azure-skills to get correct mock patterns for Azure SDK services.
+description: Designs and writes test cases before implementation. Translates sprint acceptance criteria into failing pytest tests (red phase of TDD). Only runs when Planner sets TDD required YES in handoff.md. Uses Microsoft Learn MCP and find-azure-skills to get correct mock patterns for Azure SDK services.
 model: claude-sonnet-4.6
 tools: ["read", "edit", "execute", "agent", "microsoft-learn/*", "Context7/*"]
 ---
@@ -98,7 +98,7 @@ Not all categories are required for every criterion — skip categories that don
 
 After writing all test files, run:
 ```bash
-python -m pytest tests/<workflow-id>/sprint-N/ -v --tb=short 2>&1 | head -60
+uv run pytest tests/<workflow-id>/sprint-N/ -v --tb=short 2>&1 | head -60
 ```
 
 Expected result: **all tests collected, all FAILED** (red phase). If any test passes, it means the implementation already exists or the test is testing the wrong thing — fix before reporting.

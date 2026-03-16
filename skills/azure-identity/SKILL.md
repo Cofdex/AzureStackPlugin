@@ -15,7 +15,7 @@ description: >
 ## Installation & Imports
 
 ```bash
-pip install azure-identity
+uv add azure-identity
 ```
 
 ```python

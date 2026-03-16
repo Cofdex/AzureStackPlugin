@@ -17,9 +17,9 @@ description: >
 
 # Azure AI Voice Live SDK
 
-Package: `pip install "azure-ai-voicelive[aiohttp]"` (v1.1.0 GA, **async-only**)
+Package: `uv add "azure-ai-voicelive[aiohttp]"` (v1.1.0 GA, **async-only**)
 
-For audio capture/playback in samples: `pip install pyaudio python-dotenv`
+For audio capture/playback in samples: `uv add pyaudio python-dotenv`
 
 This SDK streams audio over a WebSocket to an Azure AI model (e.g., `gpt-4o-realtime-preview`) and receives typed events back — including synthesized audio, transcripts, and tool calls — enabling real-time voice conversations.
 

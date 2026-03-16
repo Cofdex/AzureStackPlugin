@@ -13,7 +13,7 @@ description: >
 
 ## Packages
 ```bash
-pip install pyodbc sqlalchemy azure-identity
+uv add pyodbc sqlalchemy azure-identity
 # Also install ODBC Driver 18: https://learn.microsoft.com/sql/connect/odbc/download-odbc-driver-for-sql-server
 ```
 

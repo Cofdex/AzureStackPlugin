@@ -13,7 +13,7 @@ description: >
 
 ## Package
 ```bash
-pip install azure-digitaltwins-core azure-identity
+uv add azure-digitaltwins-core azure-identity
 ```
 
 ## Client

@@ -14,7 +14,7 @@ description: >
 
 ## Package
 ```bash
-pip install azure-mgmt-appcontainers azure-identity
+uv add azure-mgmt-appcontainers azure-identity
 ```
 
 ## Client setup

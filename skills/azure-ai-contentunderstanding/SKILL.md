@@ -20,9 +20,9 @@ Azure AI Content Understanding is a multimodal service that extracts semantic co
 ## Install
 
 ```bash
-pip install azure-ai-contentunderstanding
-pip install azure-identity  # for DefaultAzureCredential
-pip install aiohttp         # only needed for async operations
+uv add azure-ai-contentunderstanding
+uv add azure-identity  # for DefaultAzureCredential
+uv add aiohttp         # only needed for async operations
 ```
 
 **Env vars:**

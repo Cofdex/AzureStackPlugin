@@ -15,7 +15,7 @@ description: >
 ## Installation & Imports
 
 ```python
-pip install azure-containerregistry azure-identity
+uv add azure-containerregistry azure-identity
 ```
 
 ```python

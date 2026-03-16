@@ -14,7 +14,7 @@ description: >
 
 ## Package
 ```bash
-pip install azure-ai-documentintelligence azure-identity
+uv add azure-ai-documentintelligence azure-identity
 ```
 
 **⚠️ Use `azure-ai-documentintelligence`, NOT the deprecated `azure-ai-formrecognizer`.**

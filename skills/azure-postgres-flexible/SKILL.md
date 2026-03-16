@@ -13,7 +13,7 @@ description: >
 
 ## Packages
 ```bash
-pip install psycopg2-binary asyncpg azure-identity
+uv add psycopg2-binary asyncpg azure-identity
 ```
 
 ## Synchronous (psycopg2)

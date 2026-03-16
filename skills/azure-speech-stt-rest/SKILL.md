@@ -274,7 +274,7 @@ Response has `combinedPhrases[0].text` (full text) and `phrases[]` (per-segment 
 
 1. **Create** Azure AI Speech resource (Azure Portal → Create resource → Azure AI Speech)
 2. **Copy** the resource key (Keys and Endpoint → KEY 1) and region
-3. **Install** `pip install requests`
+3. **Install** `uv add requests`
 4. **Use** key as `Ocp-Apim-Subscription-Key`, region in the URL
 5. **Audio** must be ≤60s for Short Audio REST, valid audio format
 

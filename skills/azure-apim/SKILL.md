@@ -19,7 +19,7 @@ itself (not calls through it).
 ## Installation
 
 ```bash
-pip install azure-mgmt-apimanagement azure-identity
+uv add azure-mgmt-apimanagement azure-identity
 ```
 
 ## Client Initialization

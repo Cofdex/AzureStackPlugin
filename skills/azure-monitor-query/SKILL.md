@@ -12,7 +12,7 @@ description: >
 
 ## Package
 ```bash
-pip install azure-monitor-query azure-identity
+uv add azure-monitor-query azure-identity
 ```
 
 ## Two clients

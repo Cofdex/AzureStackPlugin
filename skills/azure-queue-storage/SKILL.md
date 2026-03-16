@@ -13,7 +13,7 @@ description: >
 
 ## Package
 ```bash
-pip install azure-storage-queue azure-identity
+uv add azure-storage-queue azure-identity
 ```
 
 ## Client setup

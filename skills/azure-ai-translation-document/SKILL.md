@@ -24,7 +24,7 @@ large batches of documents stored in Azure Blob Storage while preserving formatt
 ## Install
 
 ```bash
-pip install azure-ai-translation-document azure-identity
+uv add azure-ai-translation-document azure-identity
 ```
 
 ## Connect — DocumentTranslationClient

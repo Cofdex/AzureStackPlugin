@@ -13,9 +13,9 @@ description: >
 
 ## Packages
 ```bash
-pip install azure-mgmt-notificationhubs   # Management (create/configure hubs)
-pip install azure-identity
-pip install requests                       # For REST API sends
+uv add azure-mgmt-notificationhubs   # Management (create/configure hubs)
+uv add azure-identity
+uv add requests                       # For REST API sends
 ```
 
 > **Key fact:** The Python SDK manages hub infrastructure but has no built-in

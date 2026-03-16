@@ -14,7 +14,7 @@ description: >
 
 ## Package
 ```bash
-pip install azure-ai-evaluation
+uv add azure-ai-evaluation
 ```
 
 ## Configuration

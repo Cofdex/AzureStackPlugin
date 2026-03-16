@@ -13,7 +13,7 @@ description: >
 
 ## Package
 ```bash
-pip install azure-mgmt-containerservice azure-identity
+uv add azure-mgmt-containerservice azure-identity
 ```
 
 ## Client setup

@@ -79,10 +79,10 @@ The sole agent that generates production code and patches. Operates in `feature`
 
 ```bash
 # After each task
-python -m pytest tests/<workflow-id>/sprint-N/ -x -q 2>&1 | tail -20
+uv run pytest tests/<workflow-id>/sprint-N/ -x -q 2>&1 | tail -20
 
 # Final full run before reporting
-python -m pytest tests/<workflow-id>/sprint-N/ -v 2>&1 | tail -30
+uv run pytest tests/<workflow-id>/sprint-N/ -v 2>&1 | tail -30
 ```
 
 All tests must be green before writing `implementation-report.md`. If any test fails after two fix attempts, document it in `## Flagged issues` and emit the report anyway — Planner will decide.

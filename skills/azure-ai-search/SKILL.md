@@ -17,7 +17,7 @@ Build full-text, vector, hybrid, and semantic search experiences using `azure-se
 ## Installation
 
 ```bash
-pip install azure-search-documents azure-identity
+uv add azure-search-documents azure-identity
 ```
 
 ## Three clients to know

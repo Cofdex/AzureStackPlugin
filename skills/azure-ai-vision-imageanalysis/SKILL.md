@@ -15,7 +15,7 @@ description: >
 
 # Azure AI Vision Image Analysis SDK
 
-Package: `pip install azure-ai-vision-imageanalysis` (v1.0.0 stable)
+Package: `uv add azure-ai-vision-imageanalysis` (v1.0.0 stable)
 
 ## Client setup
 

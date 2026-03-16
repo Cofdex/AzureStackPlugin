@@ -16,7 +16,7 @@ Complete list of all available skills. 53 skills across 3 categories.
 
 ### AI & Machine Learning
 
-| Skill | `pip install` | What it does |
+| Skill | `uv add` | What it does |
 |---|---|---|
 | `azure-openai` | `openai azure-identity` | Chat completions, embeddings, DALL-E, streaming, function calling via Azure OpenAI (GPT-4, GPT-3.5) |
 | `azure-ai-projects` | `azure-ai-projects>=2.0.0` | High-level Microsoft Foundry SDK: AIProjectClient, versioned AI assets, connections, deployments |
@@ -27,7 +27,7 @@ Complete list of all available skills. 53 skills across 3 categories.
 
 ### AI Cognitive Services
 
-| Skill | `pip install` | What it does |
+| Skill | `uv add` | What it does |
 |---|---|---|
 | `azure-ai-search` | `azure-search-documents azure-identity` | Full-text, vector, hybrid, semantic search; index management; document ingestion |
 | `azure-ai-textanalytics` | `azure-ai-textanalytics azure-identity` | NLP: sentiment analysis, NER, key phrases, language detection, PII extraction |
@@ -45,7 +45,7 @@ Complete list of all available skills. 53 skills across 3 categories.
 
 ### Storage & Data
 
-| Skill | `pip install` | What it does |
+| Skill | `uv add` | What it does |
 |---|---|---|
 | `azure-blob-storage` | `azure-storage-blob azure-identity` | Upload, download, list, manage blobs and containers (BlobServiceClient, BlobClient) |
 | `azure-datalake` | `azure-storage-file-datalake azure-identity` | Data Lake Gen2: hierarchical namespace, large file uploads (append+flush), ACLs |
@@ -60,7 +60,7 @@ Complete list of all available skills. 53 skills across 3 categories.
 
 ### Messaging & Events
 
-| Skill | `pip install` | What it does |
+| Skill | `uv add` | What it does |
 |---|---|---|
 | `azure-service-bus` | `azure-servicebus azure-identity` | Reliable message queuing, pub/sub (topics/subscriptions), dead-letter handling |
 | `azure-event-hubs` | `azure-eventhub azure-eventhub-checkpointstoreblob azure-identity` | High-throughput event streaming, IoT telemetry, Kafka-compatible pipelines |
@@ -69,7 +69,7 @@ Complete list of all available skills. 53 skills across 3 categories.
 
 ### Compute & Containers
 
-| Skill | `pip install` | What it does |
+| Skill | `uv add` | What it does |
 |---|---|---|
 | `azure-functions` | `azure-functions` | Serverless functions (v2 model): HTTP, timer, queue, blob, Service Bus, Event Hub triggers |
 | `azure-container-apps` | `azure-mgmt-appcontainers azure-identity` | Deploy/manage container apps, environments, ingress, scaling, Dapr |
@@ -78,7 +78,7 @@ Complete list of all available skills. 53 skills across 3 categories.
 
 ### Security & Configuration
 
-| Skill | `pip install` | What it does |
+| Skill | `uv add` | What it does |
 |---|---|---|
 | `azure-identity` | `azure-identity` | All Azure auth patterns: DefaultAzureCredential, ClientSecretCredential, managed identity, token providers |
 | `azure-keyvault` | `azure-keyvault-secrets azure-identity` | Store/retrieve secrets, manage encryption keys, certificates (SecretClient, KeyClient, CertificateClient) |
@@ -86,7 +86,7 @@ Complete list of all available skills. 53 skills across 3 categories.
 
 ### Networking & Integration
 
-| Skill | `pip install` | What it does |
+| Skill | `uv add` | What it does |
 |---|---|---|
 | `azure-apim` | `azure-mgmt-apimanagement azure-identity` | Manage APIs, products, subscriptions, policies, backends in APIM |
 | `azure-communication-services` | `azure-communication-email` + others | Send email (EmailClient), SMS (SmsClient), manage identities |
@@ -94,7 +94,7 @@ Complete list of all available skills. 53 skills across 3 categories.
 
 ### Observability & DevOps
 
-| Skill | `pip install` | What it does |
+| Skill | `uv add` | What it does |
 |---|---|---|
 | `azure-application-insights` | `azure-monitor-opentelemetry opentelemetry-api` | Distributed tracing, custom metrics, structured logging via OpenTelemetry |
 | `azure-monitor-query` | `azure-monitor-query azure-identity` | Run KQL queries against Log Analytics workspaces; query Azure Monitor metrics |
@@ -103,7 +103,7 @@ Complete list of all available skills. 53 skills across 3 categories.
 
 ### General Python Patterns
 
-| Skill | `pip install` | What it does |
+| Skill | `uv add` | What it does |
 |---|---|---|
 | `fastapi-crud` | *(FastAPI project)* | Build FastAPI REST API routers with CRUD operations, auth dependencies, Pydantic response models |
 | `pydantic-models` | *(Pydantic v2)* | Create Pydantic v2 models: Base/Create/Update/Response/InDB multi-model pattern |

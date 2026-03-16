@@ -16,7 +16,7 @@ description: >
 ## Setup
 
 ```bash
-pip install requests azure-identity
+uv add requests azure-identity
 ```
 
 ## Authentication
@@ -153,7 +153,7 @@ requests.delete(f"{BASE_URL}/Videos/{video_id}", headers=HEADERS)
 
 | ❌ Wrong | ✅ Correct |
 |---|---|
-| `pip install azure-video-indexer` | No such package — use REST API + `requests` |
+| `uv add azure-video-indexer` | No such package — use REST API + `requests` |
 | `VideoIndexerClient(...)` | No such class — build REST calls manually |
 | `insights["sentiment"]` | No sentiment — use `insights["emotions"]` instead |
 | Expecting real-time results | Video Indexer is async — poll state until `"Processed"` |

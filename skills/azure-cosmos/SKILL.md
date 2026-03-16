@@ -15,7 +15,7 @@ description: >
 ## Installation & Imports
 
 ```python
-pip install azure-cosmos azure-identity
+uv add azure-cosmos azure-identity
 ```
 
 ```python

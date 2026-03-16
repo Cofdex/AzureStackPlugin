@@ -20,7 +20,7 @@ to text with timestamps, speaker diarization, multi-language detection, and phra
 ## Install
 
 ```bash
-pip install azure-ai-transcription azure-identity
+uv add azure-ai-transcription azure-identity
 ```
 
 ## Connect — TranscriptionClient

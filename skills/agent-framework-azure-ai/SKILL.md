@@ -19,7 +19,7 @@ description: >
 **Env vars needed**: `PROJECT_ENDPOINT`, `MODEL_DEPLOYMENT_NAME`
 
 ```bash
-pip install azure-ai-projects azure-ai-agents azure-identity
+uv add azure-ai-projects azure-ai-agents azure-identity
 ```
 
 ---

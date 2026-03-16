@@ -16,11 +16,11 @@ description: >
 Three separate packages, each with its own client class. Install what you need:
 
 ```bash
-pip install azure-keyvault-secrets azure-identity     # secrets only
-pip install azure-keyvault-keys azure-identity        # keys only
-pip install azure-keyvault-certificates azure-identity  # certs only
+uv add azure-keyvault-secrets azure-identity     # secrets only
+uv add azure-keyvault-keys azure-identity        # keys only
+uv add azure-keyvault-certificates azure-identity  # certs only
 # or all at once:
-pip install azure-keyvault-secrets azure-keyvault-keys azure-keyvault-certificates azure-identity
+uv add azure-keyvault-secrets azure-keyvault-keys azure-keyvault-certificates azure-identity
 ```
 
 **Vault URL format** (same for all clients):

@@ -13,7 +13,7 @@ description: >
 
 ## Package
 ```bash
-pip install azure-ai-vision-face azure-identity
+uv add azure-ai-vision-face azure-identity
 ```
 
 ## Clients

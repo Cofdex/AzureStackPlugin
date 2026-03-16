@@ -14,7 +14,7 @@ description: >
 
 ## Package
 ```bash
-pip install azure-storage-file-datalake azure-identity
+uv add azure-storage-file-datalake azure-identity
 ```
 
 ## Client setup

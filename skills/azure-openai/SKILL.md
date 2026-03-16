@@ -13,7 +13,7 @@ description: >
 
 ## Package
 ```bash
-pip install openai azure-identity
+uv add openai azure-identity
 ```
 
 ## Clients
