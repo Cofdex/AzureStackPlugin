@@ -2,16 +2,13 @@
 name: drawio-azure
 description: >
   Generate production-ready Azure architecture diagrams as .drawio files using official Microsoft Azure
-  icons (sourced from the benc-uk/icon-collection GitHub repo, which mirrors the official Microsoft Azure
-  Architecture Center icons). Use this skill whenever a user asks to create, design, draw, diagram, or
-  visualize any Azure architecture, cloud infrastructure, solution design, or system topology in draw.io
-  or diagrams.net format. Triggers include: "draw an Azure architecture", "create a draw.io diagram",
-  "design an Azure solution", "generate a .drawio file", "architecture diagram for Azure", "draw my
-  Azure setup", "diagram this Azure infrastructure", or any request involving Azure services with a
-  visual/diagram output. Also triggers when the user describes an Azure solution and wants it visualized
-  — even if they don't say "draw.io" explicitly but imply a diagramming output. This skill produces
-  valid .drawio XML that opens correctly in draw.io / diagrams.net with properly rendered Azure icons,
-  WAF-aligned zone groupings, and clean professional layouts.
+  icons. Use this skill whenever a user asks to create, design, draw, or visualize any Azure architecture,
+  cloud infrastructure, solution design, or system topology in draw.io or diagrams.net format. Triggers:
+  "draw an Azure architecture", "create a draw.io diagram", "design an Azure solution", "generate a
+  .drawio file", "architecture diagram for Azure", "draw my Azure setup", "diagram this Azure
+  infrastructure", or any request involving Azure services with a visual output. Also triggers when the
+  user describes an Azure solution and wants it visualized — even without saying "draw.io" explicitly.
+  Produces valid .drawio XML with official Azure icons, WAF-aligned zones, and professional layouts.
 ---
 
 # Draw.io Azure Architecture Diagrams
